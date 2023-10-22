@@ -9,16 +9,26 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-amplify/adapter-nextjs": "latest",
+    "@aws-amplify/ui-react": "next-release",
+    "aws-amplify": "next",
+    "next": "13.5.6",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "13.5.6"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@aws-amplify/amplify-api-next-alpha": "^0.6.0",
+    "@aws-amplify/amplify-api-next-types-alpha": "^0.2.1",
+    "@aws-amplify/auth-construct-alpha": "^0.2.0-alpha.14",
+    "@aws-amplify/backend": "^0.2.0-alpha.9",
+    "@aws-amplify/backend-auth": "^0.2.0-alpha.12",
+    "@aws-amplify/backend-graphql": "^0.2.0-alpha.10",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "aws-cdk-lib": "^2.102.0",
     "eslint": "^8",
-    "eslint-config-next": "13.5.6"
+    "eslint-config-next": "13.5.6",
+    "typescript": "^5"
   }
 }
