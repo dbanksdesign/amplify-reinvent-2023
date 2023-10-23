@@ -10,7 +10,6 @@ const backend = new Backend({
   data,
 });
 
-
 const bedrockDataSource = backend.resources.data.addHttpDataSource(
   'bedrockDS',
   'https://bedrock-runtime.us-east-1.amazonaws.com',
