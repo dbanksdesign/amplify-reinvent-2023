@@ -47,6 +47,7 @@ export default function Home() {
           prompt: prompt,
         },
       })
+      // @ts-ignore
       .then((results) => {
         try {
           const response = JSON.parse(results.data.generateTacoRecipe);

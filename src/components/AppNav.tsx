@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button, Flex } from '@aws-amplify/ui-react';
 import { LuMoon, LuSun } from 'react-icons/lu';
 import { ColorModeContext } from './ColorModeContext';
-import { Auth } from 'aws-amplify';
+import * as Auth from 'aws-amplify/auth';
 
 export const AppNav = () => {
   const { mode, toggleColorMode } = React.useContext(ColorModeContext);
