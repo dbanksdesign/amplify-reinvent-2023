@@ -36,3 +36,6 @@ next-env.d.ts
 
 
 cdk.out
+
+amplifyconfiguration.json
+.vscode/settings.json

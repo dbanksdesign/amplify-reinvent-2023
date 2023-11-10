@@ -1,0 +1,145 @@
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/*
+  2. Remove default margin
+*/
+* {
+  margin: 0;
+}
+/*
+  Typographic tweaks!
+  3. Add accessible line-height
+  4. Improve text rendering
+*/
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+/*
+  5. Improve media defaults
+*/
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+/*
+  6. Remove built-in form typography styles
+*/
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+/*
+  7. Avoid text overflows
+*/
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+/*
+  8. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body,
+#__next,
+[data-amplify-theme] {
+  width: 100%;
+  height: 100%;
+}
+
+[data-amplify-theme] {
+  background-color: var(--amplify-colors-background-primary);
+  color: var(--amplify-colors-font-primary);
+}
+
+code {
+  font-size: var(--amplify-font-sizes-medium);
+}
+
+a {
+  color: var(--amplify-colors-font-interactive);
+}
+
+.app-bar-link {
+  color: var(--amplify-colors-font-tertiary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+  margin-right: 10px;
+}
+
+.app-bar-link:hover {
+  color: var(--amplify-colors-font-interactive);
+}
+
+.app-bar-link--active {
+  color: var(--amplify-colors-font-interactive);
+}
+
+.app-header-logo-link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--amplify-space-xs);
+  text-decoration: none;
+  color: var(--amplify-colors-font-secondary);
+}
+
+.chat-footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: var(--amplify-space-large);
+  backdrop-filter: blur(8px);
+  & > * {
+    position: relative;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: var(--amplify-colors-background-primary);
+    opacity: 0.5;
+  }
+}
+
+textarea {
+  outline: none;
+  padding: 0;
+  border: none;
+  margin: 0;
+  background-color: transparent;
+  width: 100%;
+}
