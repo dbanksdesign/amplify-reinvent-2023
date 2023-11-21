@@ -11,7 +11,8 @@ import awsExports from '../../amplifyconfiguration.json';
 import { PromptContainer } from '@/components/Conversation/PromptContainer';
 import { ChatMessage } from '@/components/Conversation/ChatMessage';
 import useClient from '@/hooks/useClient';
-import { generateTacoRecipe } from '../../graphql/queries';
+// import { generateTacoRecipe } from '../../graphql/queries';
+import * as queries from '../../graphql/queries';
 
 Amplify.configure({
   ...awsExports,
@@ -26,39 +27,52 @@ export default function Home() {
   const [messages, setMessages] = React.useState<Message[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const { client } = useClient();
-  const onSendMessage = (message: string) => {
-    setIsLoading(true);
-    const newMessages = [
-      ...messages,
-      { content: message, author: 'Human' } as Message,
-    ];
-    setMessages(newMessages);
 
-    const prompt = [...newMessages, { content: '', author: 'Assistant' }]
-      .map((message) => {
-        return `${message.author}: ${message.content}`;
-      })
-      .join(`\n\n`);
-
+  React.useEffect(() => {
     client
       .graphql({
-        query: generateTacoRecipe,
+        query: queries.test,
         variables: {
-          prompt: prompt,
+          content: 'Echo me!',
         },
       })
-      // @ts-ignore
       .then((results) => {
-        try {
-          const response = JSON.parse(results.data.generateTacoRecipe);
-          setMessages([
-            ...newMessages,
-            { content: response.completion, author: 'Assistant' },
-          ]);
-          setIsLoading(false);
-        } catch (error) {}
+        console.log(results);
       });
-  };
+  }, [client]);
+
+  // const onSendMessage = (message: string) => {
+  //   setIsLoading(true);
+  //   const newMessages = [
+  //     ...messages,
+  //     { content: message, author: 'Human' } as Message,
+  //   ];
+  //   setMessages(newMessages);
+
+  //   const prompt = [...newMessages, { content: '', author: 'Assistant' }]
+  //     .map((message) => {
+  //       return `${message.author}: ${message.content}`;
+  //     })
+  //     .join(`\n\n`);
+
+  //   client
+  //     .graphql({
+  //       query: generateTacoRecipe,
+  //       variables: {
+  //         prompt,
+  //       },
+  //     })
+  //     .then((results) => {
+  //       try {
+  //         const response = JSON.parse(results.data.generateTacoRecipe);
+  //         setMessages([
+  //           ...newMessages,
+  //           { content: response.completion, author: 'Assistant' },
+  //         ]);
+  //         setIsLoading(false);
+  //       } catch (error) {}
+  //     });
+  // };
 
   return (
     <Authenticator>
@@ -69,7 +83,7 @@ export default function Home() {
           ))}
           {isLoading ? <Placeholder /> : null}
           <View className="chat-footer">
-            <PromptContainer sendMessage={onSendMessage} />
+            {/* <PromptContainer sendMessage={onSendMessage} /> */}
           </View>
         </Flex>
       </ScrollView>
