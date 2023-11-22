@@ -10,7 +10,15 @@ import { defineData, a, ClientSchema, Func } from '@aws-amplify/backend';
 const schema = a.schema({
   BedrockResponse: a.customType({
     body: a.string(),
+    error: a.string(),
   }),
+
+  Todo: a
+    .model({
+      content: a.string(),
+      isDone: a.boolean(),
+    })
+    .authorization([a.allow.public().to(['read']), a.allow.owner()]),
 
   Question: a
     .model({
@@ -37,10 +45,7 @@ const schema = a.schema({
   askBedrock: a
     .query()
     .arguments({
-      model: a.string().required(),
-      temperature: a.float().required(),
-      question: a.string().required(),
-      answers: a.string().array().required(),
+      todos: a.string().array(),
     })
     .returns(a.ref('BedrockResponse')),
 });

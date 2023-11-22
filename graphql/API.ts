@@ -5,22 +5,11 @@
 export type BedrockResponse = {
   __typename: "BedrockResponse",
   body?: string | null,
+  error?: string | null,
 };
 
-export type Question = {
-  __typename: "Question",
-  answers: Array< string | null >,
-  correctAnswer: string,
-  createdAt: string,
-  id: string,
-  owner?: string | null,
-  testQuestionsId?: string | null,
-  text: string,
-  updatedAt: string,
-};
-
-export type Test = {
-  __typename: "Test",
+export type Game = {
+  __typename: "Game",
   createdAt: string,
   id: string,
   owner?: string | null,
@@ -34,17 +23,36 @@ export type ModelQuestionConnection = {
   nextToken?: string | null,
 };
 
-export type ModelQuestionFilterInput = {
-  and?: Array< ModelQuestionFilterInput | null > | null,
-  answers?: ModelStringInput | null,
-  correctAnswer?: ModelStringInput | null,
+export type Question = {
+  __typename: "Question",
+  answers: Array< string | null >,
+  correctAnswer: string,
+  createdAt: string,
+  game?: Game | null,
+  gameQuestionsId?: string | null,
+  id: string,
+  owner?: string | null,
+  text: string,
+  updatedAt: string,
+};
+
+export type Todo = {
+  __typename: "Todo",
+  content?: string | null,
+  createdAt: string,
+  id: string,
+  isDone?: boolean | null,
+  owner?: string | null,
+  updatedAt: string,
+};
+
+export type ModelGameFilterInput = {
+  and?: Array< ModelGameFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
   id?: ModelIDInput | null,
-  not?: ModelQuestionFilterInput | null,
-  or?: Array< ModelQuestionFilterInput | null > | null,
+  not?: ModelGameFilterInput | null,
+  or?: Array< ModelGameFilterInput | null > | null,
   owner?: ModelStringInput | null,
-  testQuestionsId?: ModelIDInput | null,
-  text?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
 
@@ -110,20 +118,65 @@ export enum ModelSortDirection {
 }
 
 
-export type ModelTestFilterInput = {
-  and?: Array< ModelTestFilterInput | null > | null,
+export type ModelGameConnection = {
+  __typename: "ModelGameConnection",
+  items:  Array<Game | null >,
+  nextToken?: string | null,
+};
+
+export type ModelQuestionFilterInput = {
+  and?: Array< ModelQuestionFilterInput | null > | null,
+  answers?: ModelStringInput | null,
+  correctAnswer?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  gameQuestionsId?: ModelIDInput | null,
+  id?: ModelIDInput | null,
+  not?: ModelQuestionFilterInput | null,
+  or?: Array< ModelQuestionFilterInput | null > | null,
+  owner?: ModelStringInput | null,
+  text?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type ModelTodoFilterInput = {
+  and?: Array< ModelTodoFilterInput | null > | null,
+  content?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   id?: ModelIDInput | null,
-  not?: ModelTestFilterInput | null,
-  or?: Array< ModelTestFilterInput | null > | null,
+  isDone?: ModelBooleanInput | null,
+  not?: ModelTodoFilterInput | null,
+  or?: Array< ModelTodoFilterInput | null > | null,
   owner?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
 
-export type ModelTestConnection = {
-  __typename: "ModelTestConnection",
-  items:  Array<Test | null >,
+export type ModelBooleanInput = {
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  eq?: boolean | null,
+  ne?: boolean | null,
+};
+
+export type ModelTodoConnection = {
+  __typename: "ModelTodoConnection",
+  items:  Array<Todo | null >,
   nextToken?: string | null,
+};
+
+export type ModelGameConditionInput = {
+  and?: Array< ModelGameConditionInput | null > | null,
+  createdAt?: ModelStringInput | null,
+  not?: ModelGameConditionInput | null,
+  or?: Array< ModelGameConditionInput | null > | null,
+  owner?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+};
+
+export type CreateGameInput = {
+  createdAt?: string | null,
+  id?: string | null,
+  owner?: string | null,
+  updatedAt?: string | null,
 };
 
 export type ModelQuestionConditionInput = {
@@ -131,10 +184,10 @@ export type ModelQuestionConditionInput = {
   answers?: ModelStringInput | null,
   correctAnswer?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
+  gameQuestionsId?: ModelIDInput | null,
   not?: ModelQuestionConditionInput | null,
   or?: Array< ModelQuestionConditionInput | null > | null,
   owner?: ModelStringInput | null,
-  testQuestionsId?: ModelIDInput | null,
   text?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
@@ -143,64 +196,77 @@ export type CreateQuestionInput = {
   answers: Array< string | null >,
   correctAnswer: string,
   createdAt?: string | null,
+  gameQuestionsId?: string | null,
   id?: string | null,
   owner?: string | null,
-  testQuestionsId?: string | null,
   text: string,
   updatedAt?: string | null,
 };
 
-export type ModelTestConditionInput = {
-  and?: Array< ModelTestConditionInput | null > | null,
+export type ModelTodoConditionInput = {
+  and?: Array< ModelTodoConditionInput | null > | null,
+  content?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  not?: ModelTestConditionInput | null,
-  or?: Array< ModelTestConditionInput | null > | null,
+  isDone?: ModelBooleanInput | null,
+  not?: ModelTodoConditionInput | null,
+  or?: Array< ModelTodoConditionInput | null > | null,
   owner?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
 
-export type CreateTestInput = {
+export type CreateTodoInput = {
+  content?: string | null,
   createdAt?: string | null,
   id?: string | null,
+  isDone?: boolean | null,
   owner?: string | null,
   updatedAt?: string | null,
+};
+
+export type DeleteGameInput = {
+  id: string,
 };
 
 export type DeleteQuestionInput = {
   id: string,
 };
 
-export type DeleteTestInput = {
+export type DeleteTodoInput = {
   id: string,
+};
+
+export type UpdateGameInput = {
+  createdAt?: string | null,
+  id: string,
+  owner?: string | null,
+  updatedAt?: string | null,
 };
 
 export type UpdateQuestionInput = {
   answers?: Array< string | null > | null,
   correctAnswer?: string | null,
   createdAt?: string | null,
+  gameQuestionsId?: string | null,
   id: string,
   owner?: string | null,
-  testQuestionsId?: string | null,
   text?: string | null,
   updatedAt?: string | null,
 };
 
-export type UpdateTestInput = {
+export type UpdateTodoInput = {
+  content?: string | null,
   createdAt?: string | null,
   id: string,
+  isDone?: boolean | null,
   owner?: string | null,
   updatedAt?: string | null,
 };
 
-export type ModelSubscriptionQuestionFilterInput = {
-  and?: Array< ModelSubscriptionQuestionFilterInput | null > | null,
-  answers?: ModelSubscriptionStringInput | null,
-  correctAnswer?: ModelSubscriptionStringInput | null,
+export type ModelSubscriptionGameFilterInput = {
+  and?: Array< ModelSubscriptionGameFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
-  or?: Array< ModelSubscriptionQuestionFilterInput | null > | null,
-  testQuestionsId?: ModelSubscriptionIDInput | null,
-  text?: ModelSubscriptionStringInput | null,
+  or?: Array< ModelSubscriptionGameFilterInput | null > | null,
   updatedAt?: ModelSubscriptionStringInput | null,
 };
 
@@ -234,25 +300,60 @@ export type ModelSubscriptionIDInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionTestFilterInput = {
-  and?: Array< ModelSubscriptionTestFilterInput | null > | null,
+export type ModelSubscriptionQuestionFilterInput = {
+  and?: Array< ModelSubscriptionQuestionFilterInput | null > | null,
+  answers?: ModelSubscriptionStringInput | null,
+  correctAnswer?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
+  gameQuestionsId?: ModelSubscriptionIDInput | null,
   id?: ModelSubscriptionIDInput | null,
-  or?: Array< ModelSubscriptionTestFilterInput | null > | null,
+  or?: Array< ModelSubscriptionQuestionFilterInput | null > | null,
+  text?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
 };
 
+export type ModelSubscriptionTodoFilterInput = {
+  and?: Array< ModelSubscriptionTodoFilterInput | null > | null,
+  content?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  id?: ModelSubscriptionIDInput | null,
+  isDone?: ModelSubscriptionBooleanInput | null,
+  or?: Array< ModelSubscriptionTodoFilterInput | null > | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+};
+
+export type ModelSubscriptionBooleanInput = {
+  eq?: boolean | null,
+  ne?: boolean | null,
+};
+
 export type AskBedrockQueryVariables = {
-  answers: Array< string | null >,
-  model: string,
-  question: string,
-  temperature: number,
+  todos?: Array< string | null > | null,
 };
 
 export type AskBedrockQuery = {
   askBedrock?:  {
     __typename: "BedrockResponse",
     body?: string | null,
+    error?: string | null,
+  } | null,
+};
+
+export type GetGameQueryVariables = {
+  id: string,
+};
+
+export type GetGameQuery = {
+  getGame?:  {
+    __typename: "Game",
+    createdAt: string,
+    id: string,
+    owner?: string | null,
+    questions?:  {
+      __typename: "ModelQuestionConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
   } | null,
 };
 
@@ -266,29 +367,56 @@ export type GetQuestionQuery = {
     answers: Array< string | null >,
     correctAnswer: string,
     createdAt: string,
+    game?:  {
+      __typename: "Game",
+      createdAt: string,
+      id: string,
+      owner?: string | null,
+      updatedAt: string,
+    } | null,
+    gameQuestionsId?: string | null,
     id: string,
     owner?: string | null,
-    testQuestionsId?: string | null,
     text: string,
     updatedAt: string,
   } | null,
 };
 
-export type GetTestQueryVariables = {
+export type GetTodoQueryVariables = {
   id: string,
 };
 
-export type GetTestQuery = {
-  getTest?:  {
-    __typename: "Test",
+export type GetTodoQuery = {
+  getTodo?:  {
+    __typename: "Todo",
+    content?: string | null,
     createdAt: string,
     id: string,
+    isDone?: boolean | null,
     owner?: string | null,
-    questions?:  {
-      __typename: "ModelQuestionConnection",
-      nextToken?: string | null,
-    } | null,
     updatedAt: string,
+  } | null,
+};
+
+export type ListGamesQueryVariables = {
+  filter?: ModelGameFilterInput | null,
+  id?: string | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
+};
+
+export type ListGamesQuery = {
+  listGames?:  {
+    __typename: "ModelGameConnection",
+    items:  Array< {
+      __typename: "Game",
+      createdAt: string,
+      id: string,
+      owner?: string | null,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
   } | null,
 };
 
@@ -308,9 +436,9 @@ export type ListQuestionsQuery = {
       answers: Array< string | null >,
       correctAnswer: string,
       createdAt: string,
+      gameQuestionsId?: string | null,
       id: string,
       owner?: string | null,
-      testQuestionsId?: string | null,
       text: string,
       updatedAt: string,
     } | null >,
@@ -318,25 +446,46 @@ export type ListQuestionsQuery = {
   } | null,
 };
 
-export type ListTestsQueryVariables = {
-  filter?: ModelTestFilterInput | null,
+export type ListTodosQueryVariables = {
+  filter?: ModelTodoFilterInput | null,
   id?: string | null,
   limit?: number | null,
   nextToken?: string | null,
   sortDirection?: ModelSortDirection | null,
 };
 
-export type ListTestsQuery = {
-  listTests?:  {
-    __typename: "ModelTestConnection",
+export type ListTodosQuery = {
+  listTodos?:  {
+    __typename: "ModelTodoConnection",
     items:  Array< {
-      __typename: "Test",
+      __typename: "Todo",
+      content?: string | null,
       createdAt: string,
       id: string,
+      isDone?: boolean | null,
       owner?: string | null,
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
+  } | null,
+};
+
+export type CreateGameMutationVariables = {
+  condition?: ModelGameConditionInput | null,
+  input: CreateGameInput,
+};
+
+export type CreateGameMutation = {
+  createGame?:  {
+    __typename: "Game",
+    createdAt: string,
+    id: string,
+    owner?: string | null,
+    questions?:  {
+      __typename: "ModelQuestionConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
   } | null,
 };
 
@@ -351,22 +500,46 @@ export type CreateQuestionMutation = {
     answers: Array< string | null >,
     correctAnswer: string,
     createdAt: string,
+    game?:  {
+      __typename: "Game",
+      createdAt: string,
+      id: string,
+      owner?: string | null,
+      updatedAt: string,
+    } | null,
+    gameQuestionsId?: string | null,
     id: string,
     owner?: string | null,
-    testQuestionsId?: string | null,
     text: string,
     updatedAt: string,
   } | null,
 };
 
-export type CreateTestMutationVariables = {
-  condition?: ModelTestConditionInput | null,
-  input: CreateTestInput,
+export type CreateTodoMutationVariables = {
+  condition?: ModelTodoConditionInput | null,
+  input: CreateTodoInput,
 };
 
-export type CreateTestMutation = {
-  createTest?:  {
-    __typename: "Test",
+export type CreateTodoMutation = {
+  createTodo?:  {
+    __typename: "Todo",
+    content?: string | null,
+    createdAt: string,
+    id: string,
+    isDone?: boolean | null,
+    owner?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteGameMutationVariables = {
+  condition?: ModelGameConditionInput | null,
+  input: DeleteGameInput,
+};
+
+export type DeleteGameMutation = {
+  deleteGame?:  {
+    __typename: "Game",
     createdAt: string,
     id: string,
     owner?: string | null,
@@ -389,22 +562,46 @@ export type DeleteQuestionMutation = {
     answers: Array< string | null >,
     correctAnswer: string,
     createdAt: string,
+    game?:  {
+      __typename: "Game",
+      createdAt: string,
+      id: string,
+      owner?: string | null,
+      updatedAt: string,
+    } | null,
+    gameQuestionsId?: string | null,
     id: string,
     owner?: string | null,
-    testQuestionsId?: string | null,
     text: string,
     updatedAt: string,
   } | null,
 };
 
-export type DeleteTestMutationVariables = {
-  condition?: ModelTestConditionInput | null,
-  input: DeleteTestInput,
+export type DeleteTodoMutationVariables = {
+  condition?: ModelTodoConditionInput | null,
+  input: DeleteTodoInput,
 };
 
-export type DeleteTestMutation = {
-  deleteTest?:  {
-    __typename: "Test",
+export type DeleteTodoMutation = {
+  deleteTodo?:  {
+    __typename: "Todo",
+    content?: string | null,
+    createdAt: string,
+    id: string,
+    isDone?: boolean | null,
+    owner?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateGameMutationVariables = {
+  condition?: ModelGameConditionInput | null,
+  input: UpdateGameInput,
+};
+
+export type UpdateGameMutation = {
+  updateGame?:  {
+    __typename: "Game",
     createdAt: string,
     id: string,
     owner?: string | null,
@@ -427,22 +624,46 @@ export type UpdateQuestionMutation = {
     answers: Array< string | null >,
     correctAnswer: string,
     createdAt: string,
+    game?:  {
+      __typename: "Game",
+      createdAt: string,
+      id: string,
+      owner?: string | null,
+      updatedAt: string,
+    } | null,
+    gameQuestionsId?: string | null,
     id: string,
     owner?: string | null,
-    testQuestionsId?: string | null,
     text: string,
     updatedAt: string,
   } | null,
 };
 
-export type UpdateTestMutationVariables = {
-  condition?: ModelTestConditionInput | null,
-  input: UpdateTestInput,
+export type UpdateTodoMutationVariables = {
+  condition?: ModelTodoConditionInput | null,
+  input: UpdateTodoInput,
 };
 
-export type UpdateTestMutation = {
-  updateTest?:  {
-    __typename: "Test",
+export type UpdateTodoMutation = {
+  updateTodo?:  {
+    __typename: "Todo",
+    content?: string | null,
+    createdAt: string,
+    id: string,
+    isDone?: boolean | null,
+    owner?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateGameSubscriptionVariables = {
+  filter?: ModelSubscriptionGameFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateGameSubscription = {
+  onCreateGame?:  {
+    __typename: "Game",
     createdAt: string,
     id: string,
     owner?: string | null,
@@ -465,22 +686,46 @@ export type OnCreateQuestionSubscription = {
     answers: Array< string | null >,
     correctAnswer: string,
     createdAt: string,
+    game?:  {
+      __typename: "Game",
+      createdAt: string,
+      id: string,
+      owner?: string | null,
+      updatedAt: string,
+    } | null,
+    gameQuestionsId?: string | null,
     id: string,
     owner?: string | null,
-    testQuestionsId?: string | null,
     text: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnCreateTestSubscriptionVariables = {
-  filter?: ModelSubscriptionTestFilterInput | null,
+export type OnCreateTodoSubscriptionVariables = {
+  filter?: ModelSubscriptionTodoFilterInput | null,
   owner?: string | null,
 };
 
-export type OnCreateTestSubscription = {
-  onCreateTest?:  {
-    __typename: "Test",
+export type OnCreateTodoSubscription = {
+  onCreateTodo?:  {
+    __typename: "Todo",
+    content?: string | null,
+    createdAt: string,
+    id: string,
+    isDone?: boolean | null,
+    owner?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteGameSubscriptionVariables = {
+  filter?: ModelSubscriptionGameFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteGameSubscription = {
+  onDeleteGame?:  {
+    __typename: "Game",
     createdAt: string,
     id: string,
     owner?: string | null,
@@ -503,22 +748,46 @@ export type OnDeleteQuestionSubscription = {
     answers: Array< string | null >,
     correctAnswer: string,
     createdAt: string,
+    game?:  {
+      __typename: "Game",
+      createdAt: string,
+      id: string,
+      owner?: string | null,
+      updatedAt: string,
+    } | null,
+    gameQuestionsId?: string | null,
     id: string,
     owner?: string | null,
-    testQuestionsId?: string | null,
     text: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnDeleteTestSubscriptionVariables = {
-  filter?: ModelSubscriptionTestFilterInput | null,
+export type OnDeleteTodoSubscriptionVariables = {
+  filter?: ModelSubscriptionTodoFilterInput | null,
   owner?: string | null,
 };
 
-export type OnDeleteTestSubscription = {
-  onDeleteTest?:  {
-    __typename: "Test",
+export type OnDeleteTodoSubscription = {
+  onDeleteTodo?:  {
+    __typename: "Todo",
+    content?: string | null,
+    createdAt: string,
+    id: string,
+    isDone?: boolean | null,
+    owner?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateGameSubscriptionVariables = {
+  filter?: ModelSubscriptionGameFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateGameSubscription = {
+  onUpdateGame?:  {
+    __typename: "Game",
     createdAt: string,
     id: string,
     owner?: string | null,
@@ -541,29 +810,34 @@ export type OnUpdateQuestionSubscription = {
     answers: Array< string | null >,
     correctAnswer: string,
     createdAt: string,
+    game?:  {
+      __typename: "Game",
+      createdAt: string,
+      id: string,
+      owner?: string | null,
+      updatedAt: string,
+    } | null,
+    gameQuestionsId?: string | null,
     id: string,
     owner?: string | null,
-    testQuestionsId?: string | null,
     text: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnUpdateTestSubscriptionVariables = {
-  filter?: ModelSubscriptionTestFilterInput | null,
+export type OnUpdateTodoSubscriptionVariables = {
+  filter?: ModelSubscriptionTodoFilterInput | null,
   owner?: string | null,
 };
 
-export type OnUpdateTestSubscription = {
-  onUpdateTest?:  {
-    __typename: "Test",
+export type OnUpdateTodoSubscription = {
+  onUpdateTodo?:  {
+    __typename: "Todo",
+    content?: string | null,
     createdAt: string,
     id: string,
+    isDone?: boolean | null,
     owner?: string | null,
-    questions?:  {
-      __typename: "ModelQuestionConnection",
-      nextToken?: string | null,
-    } | null,
     updatedAt: string,
   } | null,
 };

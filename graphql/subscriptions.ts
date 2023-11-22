@@ -8,6 +8,26 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
+export const onCreateGame = /* GraphQL */ `subscription OnCreateGame(
+  $filter: ModelSubscriptionGameFilterInput
+  $owner: String
+) {
+  onCreateGame(filter: $filter, owner: $owner) {
+    createdAt
+    id
+    owner
+    questions {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateGameSubscriptionVariables,
+  APITypes.OnCreateGameSubscription
+>;
 export const onCreateQuestion = /* GraphQL */ `subscription OnCreateQuestion(
   $filter: ModelSubscriptionQuestionFilterInput
   $owner: String
@@ -16,9 +36,16 @@ export const onCreateQuestion = /* GraphQL */ `subscription OnCreateQuestion(
     answers
     correctAnswer
     createdAt
+    game {
+      createdAt
+      id
+      owner
+      updatedAt
+      __typename
+    }
+    gameQuestionsId
     id
     owner
-    testQuestionsId
     text
     updatedAt
     __typename
@@ -28,11 +55,29 @@ export const onCreateQuestion = /* GraphQL */ `subscription OnCreateQuestion(
   APITypes.OnCreateQuestionSubscriptionVariables,
   APITypes.OnCreateQuestionSubscription
 >;
-export const onCreateTest = /* GraphQL */ `subscription OnCreateTest(
-  $filter: ModelSubscriptionTestFilterInput
+export const onCreateTodo = /* GraphQL */ `subscription OnCreateTodo(
+  $filter: ModelSubscriptionTodoFilterInput
   $owner: String
 ) {
-  onCreateTest(filter: $filter, owner: $owner) {
+  onCreateTodo(filter: $filter, owner: $owner) {
+    content
+    createdAt
+    id
+    isDone
+    owner
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateTodoSubscriptionVariables,
+  APITypes.OnCreateTodoSubscription
+>;
+export const onDeleteGame = /* GraphQL */ `subscription OnDeleteGame(
+  $filter: ModelSubscriptionGameFilterInput
+  $owner: String
+) {
+  onDeleteGame(filter: $filter, owner: $owner) {
     createdAt
     id
     owner
@@ -45,8 +90,8 @@ export const onCreateTest = /* GraphQL */ `subscription OnCreateTest(
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnCreateTestSubscriptionVariables,
-  APITypes.OnCreateTestSubscription
+  APITypes.OnDeleteGameSubscriptionVariables,
+  APITypes.OnDeleteGameSubscription
 >;
 export const onDeleteQuestion = /* GraphQL */ `subscription OnDeleteQuestion(
   $filter: ModelSubscriptionQuestionFilterInput
@@ -56,9 +101,16 @@ export const onDeleteQuestion = /* GraphQL */ `subscription OnDeleteQuestion(
     answers
     correctAnswer
     createdAt
+    game {
+      createdAt
+      id
+      owner
+      updatedAt
+      __typename
+    }
+    gameQuestionsId
     id
     owner
-    testQuestionsId
     text
     updatedAt
     __typename
@@ -68,11 +120,29 @@ export const onDeleteQuestion = /* GraphQL */ `subscription OnDeleteQuestion(
   APITypes.OnDeleteQuestionSubscriptionVariables,
   APITypes.OnDeleteQuestionSubscription
 >;
-export const onDeleteTest = /* GraphQL */ `subscription OnDeleteTest(
-  $filter: ModelSubscriptionTestFilterInput
+export const onDeleteTodo = /* GraphQL */ `subscription OnDeleteTodo(
+  $filter: ModelSubscriptionTodoFilterInput
   $owner: String
 ) {
-  onDeleteTest(filter: $filter, owner: $owner) {
+  onDeleteTodo(filter: $filter, owner: $owner) {
+    content
+    createdAt
+    id
+    isDone
+    owner
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteTodoSubscriptionVariables,
+  APITypes.OnDeleteTodoSubscription
+>;
+export const onUpdateGame = /* GraphQL */ `subscription OnUpdateGame(
+  $filter: ModelSubscriptionGameFilterInput
+  $owner: String
+) {
+  onUpdateGame(filter: $filter, owner: $owner) {
     createdAt
     id
     owner
@@ -85,8 +155,8 @@ export const onDeleteTest = /* GraphQL */ `subscription OnDeleteTest(
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnDeleteTestSubscriptionVariables,
-  APITypes.OnDeleteTestSubscription
+  APITypes.OnUpdateGameSubscriptionVariables,
+  APITypes.OnUpdateGameSubscription
 >;
 export const onUpdateQuestion = /* GraphQL */ `subscription OnUpdateQuestion(
   $filter: ModelSubscriptionQuestionFilterInput
@@ -96,9 +166,16 @@ export const onUpdateQuestion = /* GraphQL */ `subscription OnUpdateQuestion(
     answers
     correctAnswer
     createdAt
+    game {
+      createdAt
+      id
+      owner
+      updatedAt
+      __typename
+    }
+    gameQuestionsId
     id
     owner
-    testQuestionsId
     text
     updatedAt
     __typename
@@ -108,23 +185,21 @@ export const onUpdateQuestion = /* GraphQL */ `subscription OnUpdateQuestion(
   APITypes.OnUpdateQuestionSubscriptionVariables,
   APITypes.OnUpdateQuestionSubscription
 >;
-export const onUpdateTest = /* GraphQL */ `subscription OnUpdateTest(
-  $filter: ModelSubscriptionTestFilterInput
+export const onUpdateTodo = /* GraphQL */ `subscription OnUpdateTodo(
+  $filter: ModelSubscriptionTodoFilterInput
   $owner: String
 ) {
-  onUpdateTest(filter: $filter, owner: $owner) {
+  onUpdateTodo(filter: $filter, owner: $owner) {
+    content
     createdAt
     id
+    isDone
     owner
-    questions {
-      nextToken
-      __typename
-    }
     updatedAt
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnUpdateTestSubscriptionVariables,
-  APITypes.OnUpdateTestSubscription
+  APITypes.OnUpdateTodoSubscriptionVariables,
+  APITypes.OnUpdateTodoSubscription
 >;

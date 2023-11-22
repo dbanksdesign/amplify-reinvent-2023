@@ -8,19 +8,10 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
-export const askBedrock = /* GraphQL */ `query AskBedrock(
-  $answers: [String]!
-  $model: String!
-  $question: String!
-  $temperature: Float!
-) {
-  askBedrock(
-    answers: $answers
-    model: $model
-    question: $question
-    temperature: $temperature
-  ) {
+export const askBedrock = /* GraphQL */ `query AskBedrock($todos: [String]) {
+  askBedrock(todos: $todos) {
     body
+    error
     __typename
   }
 }
@@ -28,25 +19,8 @@ export const askBedrock = /* GraphQL */ `query AskBedrock(
   APITypes.AskBedrockQueryVariables,
   APITypes.AskBedrockQuery
 >;
-export const getQuestion = /* GraphQL */ `query GetQuestion($id: ID!) {
-  getQuestion(id: $id) {
-    answers
-    correctAnswer
-    createdAt
-    id
-    owner
-    testQuestionsId
-    text
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.GetQuestionQueryVariables,
-  APITypes.GetQuestionQuery
->;
-export const getTest = /* GraphQL */ `query GetTest($id: ID!) {
-  getTest(id: $id) {
+export const getGame = /* GraphQL */ `query GetGame($id: ID!) {
+  getGame(id: $id) {
     createdAt
     id
     owner
@@ -58,7 +32,69 @@ export const getTest = /* GraphQL */ `query GetTest($id: ID!) {
     __typename
   }
 }
-` as GeneratedQuery<APITypes.GetTestQueryVariables, APITypes.GetTestQuery>;
+` as GeneratedQuery<APITypes.GetGameQueryVariables, APITypes.GetGameQuery>;
+export const getQuestion = /* GraphQL */ `query GetQuestion($id: ID!) {
+  getQuestion(id: $id) {
+    answers
+    correctAnswer
+    createdAt
+    game {
+      createdAt
+      id
+      owner
+      updatedAt
+      __typename
+    }
+    gameQuestionsId
+    id
+    owner
+    text
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetQuestionQueryVariables,
+  APITypes.GetQuestionQuery
+>;
+export const getTodo = /* GraphQL */ `query GetTodo($id: ID!) {
+  getTodo(id: $id) {
+    content
+    createdAt
+    id
+    isDone
+    owner
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetTodoQueryVariables, APITypes.GetTodoQuery>;
+export const listGames = /* GraphQL */ `query ListGames(
+  $filter: ModelGameFilterInput
+  $id: ID
+  $limit: Int
+  $nextToken: String
+  $sortDirection: ModelSortDirection
+) {
+  listGames(
+    filter: $filter
+    id: $id
+    limit: $limit
+    nextToken: $nextToken
+    sortDirection: $sortDirection
+  ) {
+    items {
+      createdAt
+      id
+      owner
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.ListGamesQueryVariables, APITypes.ListGamesQuery>;
 export const listQuestions = /* GraphQL */ `query ListQuestions(
   $filter: ModelQuestionFilterInput
   $id: ID
@@ -77,9 +113,9 @@ export const listQuestions = /* GraphQL */ `query ListQuestions(
       answers
       correctAnswer
       createdAt
+      gameQuestionsId
       id
       owner
-      testQuestionsId
       text
       updatedAt
       __typename
@@ -92,14 +128,14 @@ export const listQuestions = /* GraphQL */ `query ListQuestions(
   APITypes.ListQuestionsQueryVariables,
   APITypes.ListQuestionsQuery
 >;
-export const listTests = /* GraphQL */ `query ListTests(
-  $filter: ModelTestFilterInput
+export const listTodos = /* GraphQL */ `query ListTodos(
+  $filter: ModelTodoFilterInput
   $id: ID
   $limit: Int
   $nextToken: String
   $sortDirection: ModelSortDirection
 ) {
-  listTests(
+  listTodos(
     filter: $filter
     id: $id
     limit: $limit
@@ -107,8 +143,10 @@ export const listTests = /* GraphQL */ `query ListTests(
     sortDirection: $sortDirection
   ) {
     items {
+      content
       createdAt
       id
+      isDone
       owner
       updatedAt
       __typename
@@ -117,4 +155,4 @@ export const listTests = /* GraphQL */ `query ListTests(
     __typename
   }
 }
-` as GeneratedQuery<APITypes.ListTestsQueryVariables, APITypes.ListTestsQuery>;
+` as GeneratedQuery<APITypes.ListTodosQueryVariables, APITypes.ListTodosQuery>;

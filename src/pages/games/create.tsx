@@ -43,7 +43,7 @@ export default function CreateGame() {
   };
 
   return (
-    <QuestionCreateForm
+    // <QuestionCreateForm
     // onValidate={{
     //   createdAt: (value) => ({ hasError: false }),
     //   updatedAt: (value) => ({ hasError: false }),
@@ -66,20 +66,20 @@ export default function CreateGame() {
     //     value: convertToLocal(new Date()),
     //   },
     // }}
-    />
-    // <Flex direction="column">
-    //   {questionIds.map((question, i) => {
-    //     return <CreateQuestion key={i} question={question} />;
-    //   })}
-    //   <Button
-    //     onClick={() => setQuestions([...questions, { ...defaultQuestion }])}
-    //   >
-    //     Add Question
-    //   </Button>
+    // />
+    <Flex direction="column">
+      {questions.map((question, i) => {
+        return <CreateQuestion key={i} question={question} />;
+      })}
+      <Button
+        onClick={() => setQuestions([...questions, { ...defaultQuestion }])}
+      >
+        Add Question
+      </Button>
 
-    //   <Button type="submit" variation="primary">
-    //     Submit
-    //   </Button>
-    // </Flex>
+      <Button type="submit" variation="primary">
+        Create game
+      </Button>
+    </Flex>
   );
 }

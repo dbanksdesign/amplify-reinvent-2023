@@ -34,7 +34,7 @@ export default function Home() {
         query: queries.askBedrock,
         variables: {
           question: 'When did amplify js launch?',
-          answers: ['2018', '2015', '2016', '2017'],
+          answers: ['wake up', 'make coffee', 'answer emails'],
           model: 'anthropic.claude-v2',
           temperature: 0.7,
         },

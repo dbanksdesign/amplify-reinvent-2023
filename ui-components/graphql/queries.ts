@@ -41,10 +41,30 @@ export const getQuestion = /* GraphQL */ `
       answers
       correctAnswer
       createdAt
+      game {
+        createdAt
+        id
+        owner
+        updatedAt
+        __typename
+      }
       gameQuestionsId
       id
       owner
       text
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const getTodo = /* GraphQL */ `
+  query GetTodo($id: ID!) {
+    getTodo(id: $id) {
+      content
+      createdAt
+      id
+      isDone
+      owner
       updatedAt
       __typename
     }
@@ -100,6 +120,35 @@ export const listQuestions = /* GraphQL */ `
         id
         owner
         text
+        updatedAt
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const listTodos = /* GraphQL */ `
+  query ListTodos(
+    $filter: ModelTodoFilterInput
+    $id: ID
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listTodos(
+      filter: $filter
+      id: $id
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        content
+        createdAt
+        id
+        isDone
+        owner
         updatedAt
         __typename
       }

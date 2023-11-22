@@ -8,6 +8,26 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
+export const createGame = /* GraphQL */ `mutation CreateGame(
+  $condition: ModelGameConditionInput
+  $input: CreateGameInput!
+) {
+  createGame(condition: $condition, input: $input) {
+    createdAt
+    id
+    owner
+    questions {
+      nextToken
+      __typename
+    }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateGameMutationVariables,
+  APITypes.CreateGameMutation
+>;
 export const createQuestion = /* GraphQL */ `mutation CreateQuestion(
   $condition: ModelQuestionConditionInput
   $input: CreateQuestionInput!
@@ -16,9 +36,16 @@ export const createQuestion = /* GraphQL */ `mutation CreateQuestion(
     answers
     correctAnswer
     createdAt
+    game {
+      createdAt
+      id
+      owner
+      updatedAt
+      __typename
+    }
+    gameQuestionsId
     id
     owner
-    testQuestionsId
     text
     updatedAt
     __typename
@@ -28,11 +55,29 @@ export const createQuestion = /* GraphQL */ `mutation CreateQuestion(
   APITypes.CreateQuestionMutationVariables,
   APITypes.CreateQuestionMutation
 >;
-export const createTest = /* GraphQL */ `mutation CreateTest(
-  $condition: ModelTestConditionInput
-  $input: CreateTestInput!
+export const createTodo = /* GraphQL */ `mutation CreateTodo(
+  $condition: ModelTodoConditionInput
+  $input: CreateTodoInput!
 ) {
-  createTest(condition: $condition, input: $input) {
+  createTodo(condition: $condition, input: $input) {
+    content
+    createdAt
+    id
+    isDone
+    owner
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateTodoMutationVariables,
+  APITypes.CreateTodoMutation
+>;
+export const deleteGame = /* GraphQL */ `mutation DeleteGame(
+  $condition: ModelGameConditionInput
+  $input: DeleteGameInput!
+) {
+  deleteGame(condition: $condition, input: $input) {
     createdAt
     id
     owner
@@ -45,8 +90,8 @@ export const createTest = /* GraphQL */ `mutation CreateTest(
   }
 }
 ` as GeneratedMutation<
-  APITypes.CreateTestMutationVariables,
-  APITypes.CreateTestMutation
+  APITypes.DeleteGameMutationVariables,
+  APITypes.DeleteGameMutation
 >;
 export const deleteQuestion = /* GraphQL */ `mutation DeleteQuestion(
   $condition: ModelQuestionConditionInput
@@ -56,9 +101,16 @@ export const deleteQuestion = /* GraphQL */ `mutation DeleteQuestion(
     answers
     correctAnswer
     createdAt
+    game {
+      createdAt
+      id
+      owner
+      updatedAt
+      __typename
+    }
+    gameQuestionsId
     id
     owner
-    testQuestionsId
     text
     updatedAt
     __typename
@@ -68,11 +120,29 @@ export const deleteQuestion = /* GraphQL */ `mutation DeleteQuestion(
   APITypes.DeleteQuestionMutationVariables,
   APITypes.DeleteQuestionMutation
 >;
-export const deleteTest = /* GraphQL */ `mutation DeleteTest(
-  $condition: ModelTestConditionInput
-  $input: DeleteTestInput!
+export const deleteTodo = /* GraphQL */ `mutation DeleteTodo(
+  $condition: ModelTodoConditionInput
+  $input: DeleteTodoInput!
 ) {
-  deleteTest(condition: $condition, input: $input) {
+  deleteTodo(condition: $condition, input: $input) {
+    content
+    createdAt
+    id
+    isDone
+    owner
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteTodoMutationVariables,
+  APITypes.DeleteTodoMutation
+>;
+export const updateGame = /* GraphQL */ `mutation UpdateGame(
+  $condition: ModelGameConditionInput
+  $input: UpdateGameInput!
+) {
+  updateGame(condition: $condition, input: $input) {
     createdAt
     id
     owner
@@ -85,8 +155,8 @@ export const deleteTest = /* GraphQL */ `mutation DeleteTest(
   }
 }
 ` as GeneratedMutation<
-  APITypes.DeleteTestMutationVariables,
-  APITypes.DeleteTestMutation
+  APITypes.UpdateGameMutationVariables,
+  APITypes.UpdateGameMutation
 >;
 export const updateQuestion = /* GraphQL */ `mutation UpdateQuestion(
   $condition: ModelQuestionConditionInput
@@ -96,9 +166,16 @@ export const updateQuestion = /* GraphQL */ `mutation UpdateQuestion(
     answers
     correctAnswer
     createdAt
+    game {
+      createdAt
+      id
+      owner
+      updatedAt
+      __typename
+    }
+    gameQuestionsId
     id
     owner
-    testQuestionsId
     text
     updatedAt
     __typename
@@ -108,23 +185,21 @@ export const updateQuestion = /* GraphQL */ `mutation UpdateQuestion(
   APITypes.UpdateQuestionMutationVariables,
   APITypes.UpdateQuestionMutation
 >;
-export const updateTest = /* GraphQL */ `mutation UpdateTest(
-  $condition: ModelTestConditionInput
-  $input: UpdateTestInput!
+export const updateTodo = /* GraphQL */ `mutation UpdateTodo(
+  $condition: ModelTodoConditionInput
+  $input: UpdateTodoInput!
 ) {
-  updateTest(condition: $condition, input: $input) {
+  updateTodo(condition: $condition, input: $input) {
+    content
     createdAt
     id
+    isDone
     owner
-    questions {
-      nextToken
-      __typename
-    }
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.UpdateTestMutationVariables,
-  APITypes.UpdateTestMutation
+  APITypes.UpdateTodoMutationVariables,
+  APITypes.UpdateTodoMutation
 >;

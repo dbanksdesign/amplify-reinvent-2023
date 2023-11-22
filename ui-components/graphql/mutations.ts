@@ -29,10 +29,33 @@ export const createQuestion = /* GraphQL */ `
       answers
       correctAnswer
       createdAt
+      game {
+        createdAt
+        id
+        owner
+        updatedAt
+        __typename
+      }
       gameQuestionsId
       id
       owner
       text
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const createTodo = /* GraphQL */ `
+  mutation CreateTodo(
+    $condition: ModelTodoConditionInput
+    $input: CreateTodoInput!
+  ) {
+    createTodo(condition: $condition, input: $input) {
+      content
+      createdAt
+      id
+      isDone
+      owner
       updatedAt
       __typename
     }
@@ -65,10 +88,33 @@ export const deleteQuestion = /* GraphQL */ `
       answers
       correctAnswer
       createdAt
+      game {
+        createdAt
+        id
+        owner
+        updatedAt
+        __typename
+      }
       gameQuestionsId
       id
       owner
       text
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const deleteTodo = /* GraphQL */ `
+  mutation DeleteTodo(
+    $condition: ModelTodoConditionInput
+    $input: DeleteTodoInput!
+  ) {
+    deleteTodo(condition: $condition, input: $input) {
+      content
+      createdAt
+      id
+      isDone
+      owner
       updatedAt
       __typename
     }
@@ -101,10 +147,33 @@ export const updateQuestion = /* GraphQL */ `
       answers
       correctAnswer
       createdAt
+      game {
+        createdAt
+        id
+        owner
+        updatedAt
+        __typename
+      }
       gameQuestionsId
       id
       owner
       text
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const updateTodo = /* GraphQL */ `
+  mutation UpdateTodo(
+    $condition: ModelTodoConditionInput
+    $input: UpdateTodoInput!
+  ) {
+    updateTodo(condition: $condition, input: $input) {
+      content
+      createdAt
+      id
+      isDone
+      owner
       updatedAt
       __typename
     }

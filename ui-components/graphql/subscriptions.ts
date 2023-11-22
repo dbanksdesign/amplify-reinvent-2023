@@ -29,10 +29,33 @@ export const onCreateQuestion = /* GraphQL */ `
       answers
       correctAnswer
       createdAt
+      game {
+        createdAt
+        id
+        owner
+        updatedAt
+        __typename
+      }
       gameQuestionsId
       id
       owner
       text
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onCreateTodo = /* GraphQL */ `
+  subscription OnCreateTodo(
+    $filter: ModelSubscriptionTodoFilterInput
+    $owner: String
+  ) {
+    onCreateTodo(filter: $filter, owner: $owner) {
+      content
+      createdAt
+      id
+      isDone
+      owner
       updatedAt
       __typename
     }
@@ -65,10 +88,33 @@ export const onDeleteQuestion = /* GraphQL */ `
       answers
       correctAnswer
       createdAt
+      game {
+        createdAt
+        id
+        owner
+        updatedAt
+        __typename
+      }
       gameQuestionsId
       id
       owner
       text
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onDeleteTodo = /* GraphQL */ `
+  subscription OnDeleteTodo(
+    $filter: ModelSubscriptionTodoFilterInput
+    $owner: String
+  ) {
+    onDeleteTodo(filter: $filter, owner: $owner) {
+      content
+      createdAt
+      id
+      isDone
+      owner
       updatedAt
       __typename
     }
@@ -101,10 +147,33 @@ export const onUpdateQuestion = /* GraphQL */ `
       answers
       correctAnswer
       createdAt
+      game {
+        createdAt
+        id
+        owner
+        updatedAt
+        __typename
+      }
       gameQuestionsId
       id
       owner
       text
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateTodo = /* GraphQL */ `
+  subscription OnUpdateTodo(
+    $filter: ModelSubscriptionTodoFilterInput
+    $owner: String
+  ) {
+    onUpdateTodo(filter: $filter, owner: $owner) {
+      content
+      createdAt
+      id
+      isDone
+      owner
       updatedAt
       __typename
     }
