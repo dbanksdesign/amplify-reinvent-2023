@@ -31,13 +31,17 @@ export default function Home() {
   React.useEffect(() => {
     client
       .graphql({
-        query: queries.test,
+        query: queries.askBedrock,
         variables: {
-          content: 'Echo me!',
+          question: 'When did amplify js launch?',
+          answers: ['2018', '2015', '2016', '2017'],
+          model: 'anthropic.claude-v2',
+          temperature: 0.7,
         },
       })
       .then((results) => {
         console.log(results);
+        // console.log(JSON.parse(results.data.askBedrock?.body ?? ''));
       });
   }, [client]);
 

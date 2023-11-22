@@ -2,77 +2,63 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getAuthor = /* GraphQL */ `
-  query GetAuthor($id: ID!) {
-    getAuthor(id: $id) {
-      createdAt
-      id
-      name
-      owner
-      updatedAt
+export const askBedrock = /* GraphQL */ `
+  query AskBedrock(
+    $answers: [String]!
+    $model: String!
+    $question: String!
+    $temperature: Float!
+  ) {
+    askBedrock(
+      answers: $answers
+      model: $model
+      question: $question
+      temperature: $temperature
+    ) {
+      body
       __typename
     }
   }
 `;
-export const getComment = /* GraphQL */ `
-  query GetComment($id: ID!) {
-    getComment(id: $id) {
-      body
-      commentPostId
+export const getGame = /* GraphQL */ `
+  query GetGame($id: ID!) {
+    getGame(id: $id) {
       createdAt
       id
       owner
-      post {
-        body
-        createdAt
-        id
-        owner
-        postAuthorId
-        title
-        updatedAt
-        __typename
-      }
-      postCommentsId
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const getPost = /* GraphQL */ `
-  query GetPost($id: ID!) {
-    getPost(id: $id) {
-      author {
-        createdAt
-        id
-        name
-        owner
-        updatedAt
-        __typename
-      }
-      body
-      comments {
+      questions {
         nextToken
         __typename
       }
-      createdAt
-      id
-      owner
-      postAuthorId
-      title
       updatedAt
       __typename
     }
   }
 `;
-export const listAuthors = /* GraphQL */ `
-  query ListAuthors(
-    $filter: ModelAuthorFilterInput
+export const getQuestion = /* GraphQL */ `
+  query GetQuestion($id: ID!) {
+    getQuestion(id: $id) {
+      answers
+      correctAnswer
+      createdAt
+      gameQuestionsId
+      id
+      owner
+      text
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const listGames = /* GraphQL */ `
+  query ListGames(
+    $filter: ModelGameFilterInput
     $id: ID
     $limit: Int
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
-    listAuthors(
+    listGames(
       filter: $filter
       id: $id
       limit: $limit
@@ -82,7 +68,6 @@ export const listAuthors = /* GraphQL */ `
       items {
         createdAt
         id
-        name
         owner
         updatedAt
         __typename
@@ -92,15 +77,15 @@ export const listAuthors = /* GraphQL */ `
     }
   }
 `;
-export const listComments = /* GraphQL */ `
-  query ListComments(
-    $filter: ModelCommentFilterInput
+export const listQuestions = /* GraphQL */ `
+  query ListQuestions(
+    $filter: ModelQuestionFilterInput
     $id: ID
     $limit: Int
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
-    listComments(
+    listQuestions(
       filter: $filter
       id: $id
       limit: $limit
@@ -108,54 +93,17 @@ export const listComments = /* GraphQL */ `
       sortDirection: $sortDirection
     ) {
       items {
-        body
-        commentPostId
+        answers
+        correctAnswer
         createdAt
+        gameQuestionsId
         id
         owner
-        postCommentsId
+        text
         updatedAt
         __typename
       }
       nextToken
-      __typename
-    }
-  }
-`;
-export const listPosts = /* GraphQL */ `
-  query ListPosts(
-    $filter: ModelPostFilterInput
-    $id: ID
-    $limit: Int
-    $nextToken: String
-    $sortDirection: ModelSortDirection
-  ) {
-    listPosts(
-      filter: $filter
-      id: $id
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
-      items {
-        body
-        createdAt
-        id
-        owner
-        postAuthorId
-        title
-        updatedAt
-        __typename
-      }
-      nextToken
-      __typename
-    }
-  }
-`;
-export const test = /* GraphQL */ `
-  query Test {
-    test {
-      body
       __typename
     }
   }

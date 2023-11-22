@@ -8,282 +8,123 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
-export const onCreateAuthor = /* GraphQL */ `subscription OnCreateAuthor(
-  $filter: ModelSubscriptionAuthorFilterInput
+export const onCreateQuestion = /* GraphQL */ `subscription OnCreateQuestion(
+  $filter: ModelSubscriptionQuestionFilterInput
   $owner: String
 ) {
-  onCreateAuthor(filter: $filter, owner: $owner) {
+  onCreateQuestion(filter: $filter, owner: $owner) {
+    answers
+    correctAnswer
     createdAt
     id
-    name
     owner
+    testQuestionsId
+    text
     updatedAt
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnCreateAuthorSubscriptionVariables,
-  APITypes.OnCreateAuthorSubscription
+  APITypes.OnCreateQuestionSubscriptionVariables,
+  APITypes.OnCreateQuestionSubscription
 >;
-export const onCreateComment = /* GraphQL */ `subscription OnCreateComment(
-  $filter: ModelSubscriptionCommentFilterInput
+export const onCreateTest = /* GraphQL */ `subscription OnCreateTest(
+  $filter: ModelSubscriptionTestFilterInput
   $owner: String
 ) {
-  onCreateComment(filter: $filter, owner: $owner) {
-    body
-    commentPostId
+  onCreateTest(filter: $filter, owner: $owner) {
     createdAt
     id
     owner
-    post {
-      body
-      createdAt
-      id
-      owner
-      postAuthorId
-      title
-      updatedAt
-      __typename
-    }
-    postCommentsId
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnCreateCommentSubscriptionVariables,
-  APITypes.OnCreateCommentSubscription
->;
-export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
-  $filter: ModelSubscriptionPostFilterInput
-  $owner: String
-) {
-  onCreatePost(filter: $filter, owner: $owner) {
-    author {
-      createdAt
-      id
-      name
-      owner
-      updatedAt
-      __typename
-    }
-    body
-    comments {
+    questions {
       nextToken
       __typename
     }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateTestSubscriptionVariables,
+  APITypes.OnCreateTestSubscription
+>;
+export const onDeleteQuestion = /* GraphQL */ `subscription OnDeleteQuestion(
+  $filter: ModelSubscriptionQuestionFilterInput
+  $owner: String
+) {
+  onDeleteQuestion(filter: $filter, owner: $owner) {
+    answers
+    correctAnswer
     createdAt
     id
     owner
-    postAuthorId
-    title
+    testQuestionsId
+    text
     updatedAt
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnCreatePostSubscriptionVariables,
-  APITypes.OnCreatePostSubscription
+  APITypes.OnDeleteQuestionSubscriptionVariables,
+  APITypes.OnDeleteQuestionSubscription
 >;
-export const onCreateTacoRecipe = /* GraphQL */ `subscription OnCreateTacoRecipe(
-  $filter: ModelSubscriptionTacoRecipeFilterInput
-) {
-  onCreateTacoRecipe(filter: $filter) {
-    createdAt
-    description
-    id
-    title
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnCreateTacoRecipeSubscriptionVariables,
-  APITypes.OnCreateTacoRecipeSubscription
->;
-export const onDeleteAuthor = /* GraphQL */ `subscription OnDeleteAuthor(
-  $filter: ModelSubscriptionAuthorFilterInput
+export const onDeleteTest = /* GraphQL */ `subscription OnDeleteTest(
+  $filter: ModelSubscriptionTestFilterInput
   $owner: String
 ) {
-  onDeleteAuthor(filter: $filter, owner: $owner) {
-    createdAt
-    id
-    name
-    owner
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnDeleteAuthorSubscriptionVariables,
-  APITypes.OnDeleteAuthorSubscription
->;
-export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment(
-  $filter: ModelSubscriptionCommentFilterInput
-  $owner: String
-) {
-  onDeleteComment(filter: $filter, owner: $owner) {
-    body
-    commentPostId
+  onDeleteTest(filter: $filter, owner: $owner) {
     createdAt
     id
     owner
-    post {
-      body
-      createdAt
-      id
-      owner
-      postAuthorId
-      title
-      updatedAt
-      __typename
-    }
-    postCommentsId
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnDeleteCommentSubscriptionVariables,
-  APITypes.OnDeleteCommentSubscription
->;
-export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
-  $filter: ModelSubscriptionPostFilterInput
-  $owner: String
-) {
-  onDeletePost(filter: $filter, owner: $owner) {
-    author {
-      createdAt
-      id
-      name
-      owner
-      updatedAt
-      __typename
-    }
-    body
-    comments {
+    questions {
       nextToken
       __typename
     }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteTestSubscriptionVariables,
+  APITypes.OnDeleteTestSubscription
+>;
+export const onUpdateQuestion = /* GraphQL */ `subscription OnUpdateQuestion(
+  $filter: ModelSubscriptionQuestionFilterInput
+  $owner: String
+) {
+  onUpdateQuestion(filter: $filter, owner: $owner) {
+    answers
+    correctAnswer
     createdAt
     id
     owner
-    postAuthorId
-    title
+    testQuestionsId
+    text
     updatedAt
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnDeletePostSubscriptionVariables,
-  APITypes.OnDeletePostSubscription
+  APITypes.OnUpdateQuestionSubscriptionVariables,
+  APITypes.OnUpdateQuestionSubscription
 >;
-export const onDeleteTacoRecipe = /* GraphQL */ `subscription OnDeleteTacoRecipe(
-  $filter: ModelSubscriptionTacoRecipeFilterInput
-) {
-  onDeleteTacoRecipe(filter: $filter) {
-    createdAt
-    description
-    id
-    title
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnDeleteTacoRecipeSubscriptionVariables,
-  APITypes.OnDeleteTacoRecipeSubscription
->;
-export const onUpdateAuthor = /* GraphQL */ `subscription OnUpdateAuthor(
-  $filter: ModelSubscriptionAuthorFilterInput
+export const onUpdateTest = /* GraphQL */ `subscription OnUpdateTest(
+  $filter: ModelSubscriptionTestFilterInput
   $owner: String
 ) {
-  onUpdateAuthor(filter: $filter, owner: $owner) {
-    createdAt
-    id
-    name
-    owner
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnUpdateAuthorSubscriptionVariables,
-  APITypes.OnUpdateAuthorSubscription
->;
-export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment(
-  $filter: ModelSubscriptionCommentFilterInput
-  $owner: String
-) {
-  onUpdateComment(filter: $filter, owner: $owner) {
-    body
-    commentPostId
+  onUpdateTest(filter: $filter, owner: $owner) {
     createdAt
     id
     owner
-    post {
-      body
-      createdAt
-      id
-      owner
-      postAuthorId
-      title
-      updatedAt
-      __typename
-    }
-    postCommentsId
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnUpdateCommentSubscriptionVariables,
-  APITypes.OnUpdateCommentSubscription
->;
-export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
-  $filter: ModelSubscriptionPostFilterInput
-  $owner: String
-) {
-  onUpdatePost(filter: $filter, owner: $owner) {
-    author {
-      createdAt
-      id
-      name
-      owner
-      updatedAt
-      __typename
-    }
-    body
-    comments {
+    questions {
       nextToken
       __typename
     }
-    createdAt
-    id
-    owner
-    postAuthorId
-    title
     updatedAt
     __typename
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnUpdatePostSubscriptionVariables,
-  APITypes.OnUpdatePostSubscription
->;
-export const onUpdateTacoRecipe = /* GraphQL */ `subscription OnUpdateTacoRecipe(
-  $filter: ModelSubscriptionTacoRecipeFilterInput
-) {
-  onUpdateTacoRecipe(filter: $filter) {
-    createdAt
-    description
-    id
-    title
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedSubscription<
-  APITypes.OnUpdateTacoRecipeSubscriptionVariables,
-  APITypes.OnUpdateTacoRecipeSubscription
+  APITypes.OnUpdateTestSubscriptionVariables,
+  APITypes.OnUpdateTestSubscription
 >;

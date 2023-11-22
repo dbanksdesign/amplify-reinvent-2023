@@ -4,13 +4,11 @@ import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { getPost } from "./graphql/queries";
-import { updatePost } from "./graphql/mutations";
+import { createTest } from "./graphql/mutations";
 const client = generateClient();
-export default function PostUpdateForm(props) {
+export default function TestCreateForm(props) {
   const {
-    id: idProp,
-    post: postModelProp,
+    clearOnSuccess = true,
     onSuccess,
     onError,
     onSubmit,
@@ -20,48 +18,21 @@ export default function PostUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    title: "",
-    body: "",
     owner: "",
     createdAt: "",
     updatedAt: "",
   };
-  const [title, setTitle] = React.useState(initialValues.title);
-  const [body, setBody] = React.useState(initialValues.body);
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [createdAt, setCreatedAt] = React.useState(initialValues.createdAt);
   const [updatedAt, setUpdatedAt] = React.useState(initialValues.updatedAt);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = postRecord
-      ? { ...initialValues, ...postRecord }
-      : initialValues;
-    setTitle(cleanValues.title);
-    setBody(cleanValues.body);
-    setOwner(cleanValues.owner);
-    setCreatedAt(cleanValues.createdAt);
-    setUpdatedAt(cleanValues.updatedAt);
+    setOwner(initialValues.owner);
+    setCreatedAt(initialValues.createdAt);
+    setUpdatedAt(initialValues.updatedAt);
     setErrors({});
   };
-  const [postRecord, setPostRecord] = React.useState(postModelProp);
-  React.useEffect(() => {
-    const queryData = async () => {
-      const record = idProp
-        ? (
-            await client.graphql({
-              query: getPost.replaceAll("__typename", ""),
-              variables: { id: idProp },
-            })
-          )?.data?.getPost
-        : postModelProp;
-      setPostRecord(record);
-    };
-    queryData();
-  }, [idProp, postModelProp]);
-  React.useEffect(resetStateValues, [postRecord]);
   const validations = {
-    title: [],
-    body: [],
     owner: [],
     createdAt: [{ type: "Required" }],
     updatedAt: [{ type: "Required" }],
@@ -109,9 +80,7 @@ export default function PostUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          title: title ?? null,
-          body: body ?? null,
-          owner: owner ?? null,
+          owner,
           createdAt,
           updatedAt,
         };
@@ -144,16 +113,18 @@ export default function PostUpdateForm(props) {
             }
           });
           await client.graphql({
-            query: updatePost.replaceAll("__typename", ""),
+            query: createTest.replaceAll("__typename", ""),
             variables: {
               input: {
-                id: postRecord.id,
                 ...modelFields,
               },
             },
           });
           if (onSuccess) {
             onSuccess(modelFields);
+          }
+          if (clearOnSuccess) {
+            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -162,65 +133,9 @@ export default function PostUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "PostUpdateForm")}
+      {...getOverrideProps(overrides, "TestCreateForm")}
       {...rest}
     >
-      <TextField
-        label="Title"
-        isRequired={false}
-        isReadOnly={false}
-        value={title}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              title: value,
-              body,
-              owner,
-              createdAt,
-              updatedAt,
-            };
-            const result = onChange(modelFields);
-            value = result?.title ?? value;
-          }
-          if (errors.title?.hasError) {
-            runValidationTasks("title", value);
-          }
-          setTitle(value);
-        }}
-        onBlur={() => runValidationTasks("title", title)}
-        errorMessage={errors.title?.errorMessage}
-        hasError={errors.title?.hasError}
-        {...getOverrideProps(overrides, "title")}
-      ></TextField>
-      <TextField
-        label="Body"
-        isRequired={false}
-        isReadOnly={false}
-        value={body}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              title,
-              body: value,
-              owner,
-              createdAt,
-              updatedAt,
-            };
-            const result = onChange(modelFields);
-            value = result?.body ?? value;
-          }
-          if (errors.body?.hasError) {
-            runValidationTasks("body", value);
-          }
-          setBody(value);
-        }}
-        onBlur={() => runValidationTasks("body", body)}
-        errorMessage={errors.body?.errorMessage}
-        hasError={errors.body?.hasError}
-        {...getOverrideProps(overrides, "body")}
-      ></TextField>
       <TextField
         label="Owner"
         isRequired={false}
@@ -230,8 +145,6 @@ export default function PostUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title,
-              body,
               owner: value,
               createdAt,
               updatedAt,
@@ -260,8 +173,6 @@ export default function PostUpdateForm(props) {
             e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
-              title,
-              body,
               owner,
               createdAt: value,
               updatedAt,
@@ -290,8 +201,6 @@ export default function PostUpdateForm(props) {
             e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
-              title,
-              body,
               owner,
               createdAt,
               updatedAt: value,
@@ -314,14 +223,13 @@ export default function PostUpdateForm(props) {
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Reset"
+          children="Clear"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || postModelProp)}
-          {...getOverrideProps(overrides, "ResetButton")}
+          {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -331,10 +239,7 @@ export default function PostUpdateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || postModelProp) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

@@ -8,112 +8,98 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
-export const echo = /* GraphQL */ `query Echo($content: String) {
-  echo(content: $content) {
-    content
-    executionDuration
+export const askBedrock = /* GraphQL */ `query AskBedrock(
+  $answers: [String]!
+  $model: String!
+  $question: String!
+  $temperature: Float!
+) {
+  askBedrock(
+    answers: $answers
+    model: $model
+    question: $question
+    temperature: $temperature
+  ) {
+    body
     __typename
   }
 }
-` as GeneratedQuery<APITypes.EchoQueryVariables, APITypes.EchoQuery>;
-export const generateTacoRecipe = /* GraphQL */ `query GenerateTacoRecipe($prompt: String) {
-  generateTacoRecipe(prompt: $prompt) {
+` as GeneratedQuery<
+  APITypes.AskBedrockQueryVariables,
+  APITypes.AskBedrockQuery
+>;
+export const getQuestion = /* GraphQL */ `query GetQuestion($id: ID!) {
+  getQuestion(id: $id) {
+    answers
+    correctAnswer
     createdAt
-    description
     id
-    title
+    owner
+    testQuestionsId
+    text
     updatedAt
     __typename
   }
 }
 ` as GeneratedQuery<
-  APITypes.GenerateTacoRecipeQueryVariables,
-  APITypes.GenerateTacoRecipeQuery
+  APITypes.GetQuestionQueryVariables,
+  APITypes.GetQuestionQuery
 >;
-export const getAuthor = /* GraphQL */ `query GetAuthor($id: ID!) {
-  getAuthor(id: $id) {
-    createdAt
-    id
-    name
-    owner
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.GetAuthorQueryVariables, APITypes.GetAuthorQuery>;
-export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
-  getComment(id: $id) {
-    body
-    commentPostId
+export const getTest = /* GraphQL */ `query GetTest($id: ID!) {
+  getTest(id: $id) {
     createdAt
     id
     owner
-    post {
-      body
-      createdAt
-      id
-      owner
-      postAuthorId
-      title
-      updatedAt
-      __typename
-    }
-    postCommentsId
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.GetCommentQueryVariables,
-  APITypes.GetCommentQuery
->;
-export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
-  getPost(id: $id) {
-    author {
-      createdAt
-      id
-      name
-      owner
-      updatedAt
-      __typename
-    }
-    body
-    comments {
+    questions {
       nextToken
       __typename
     }
-    createdAt
-    id
-    owner
-    postAuthorId
-    title
     updatedAt
     __typename
   }
 }
-` as GeneratedQuery<APITypes.GetPostQueryVariables, APITypes.GetPostQuery>;
-export const getTacoRecipe = /* GraphQL */ `query GetTacoRecipe($id: ID!) {
-  getTacoRecipe(id: $id) {
-    createdAt
-    description
-    id
-    title
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.GetTacoRecipeQueryVariables,
-  APITypes.GetTacoRecipeQuery
->;
-export const listAuthors = /* GraphQL */ `query ListAuthors(
-  $filter: ModelAuthorFilterInput
+` as GeneratedQuery<APITypes.GetTestQueryVariables, APITypes.GetTestQuery>;
+export const listQuestions = /* GraphQL */ `query ListQuestions(
+  $filter: ModelQuestionFilterInput
   $id: ID
   $limit: Int
   $nextToken: String
   $sortDirection: ModelSortDirection
 ) {
-  listAuthors(
+  listQuestions(
+    filter: $filter
+    id: $id
+    limit: $limit
+    nextToken: $nextToken
+    sortDirection: $sortDirection
+  ) {
+    items {
+      answers
+      correctAnswer
+      createdAt
+      id
+      owner
+      testQuestionsId
+      text
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListQuestionsQueryVariables,
+  APITypes.ListQuestionsQuery
+>;
+export const listTests = /* GraphQL */ `query ListTests(
+  $filter: ModelTestFilterInput
+  $id: ID
+  $limit: Int
+  $nextToken: String
+  $sortDirection: ModelSortDirection
+) {
+  listTests(
     filter: $filter
     id: $id
     limit: $limit
@@ -123,7 +109,6 @@ export const listAuthors = /* GraphQL */ `query ListAuthors(
     items {
       createdAt
       id
-      name
       owner
       updatedAt
       __typename
@@ -132,106 +117,4 @@ export const listAuthors = /* GraphQL */ `query ListAuthors(
     __typename
   }
 }
-` as GeneratedQuery<
-  APITypes.ListAuthorsQueryVariables,
-  APITypes.ListAuthorsQuery
->;
-export const listComments = /* GraphQL */ `query ListComments(
-  $filter: ModelCommentFilterInput
-  $id: ID
-  $limit: Int
-  $nextToken: String
-  $sortDirection: ModelSortDirection
-) {
-  listComments(
-    filter: $filter
-    id: $id
-    limit: $limit
-    nextToken: $nextToken
-    sortDirection: $sortDirection
-  ) {
-    items {
-      body
-      commentPostId
-      createdAt
-      id
-      owner
-      postCommentsId
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ListCommentsQueryVariables,
-  APITypes.ListCommentsQuery
->;
-export const listPosts = /* GraphQL */ `query ListPosts(
-  $filter: ModelPostFilterInput
-  $id: ID
-  $limit: Int
-  $nextToken: String
-  $sortDirection: ModelSortDirection
-) {
-  listPosts(
-    filter: $filter
-    id: $id
-    limit: $limit
-    nextToken: $nextToken
-    sortDirection: $sortDirection
-  ) {
-    items {
-      body
-      createdAt
-      id
-      owner
-      postAuthorId
-      title
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.ListPostsQueryVariables, APITypes.ListPostsQuery>;
-export const listTacoRecipes = /* GraphQL */ `query ListTacoRecipes(
-  $filter: ModelTacoRecipeFilterInput
-  $id: ID
-  $limit: Int
-  $nextToken: String
-  $sortDirection: ModelSortDirection
-) {
-  listTacoRecipes(
-    filter: $filter
-    id: $id
-    limit: $limit
-    nextToken: $nextToken
-    sortDirection: $sortDirection
-  ) {
-    items {
-      createdAt
-      description
-      id
-      title
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ListTacoRecipesQueryVariables,
-  APITypes.ListTacoRecipesQuery
->;
-export const test = /* GraphQL */ `query Test {
-  test {
-    content
-    executionDuration
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.TestQueryVariables, APITypes.TestQuery>;
+` as GeneratedQuery<APITypes.ListTestsQueryVariables, APITypes.ListTestsQuery>;

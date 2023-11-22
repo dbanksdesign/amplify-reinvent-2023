@@ -8,285 +8,123 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
-export const createAuthor = /* GraphQL */ `mutation CreateAuthor(
-  $condition: ModelAuthorConditionInput
-  $input: CreateAuthorInput!
+export const createQuestion = /* GraphQL */ `mutation CreateQuestion(
+  $condition: ModelQuestionConditionInput
+  $input: CreateQuestionInput!
 ) {
-  createAuthor(condition: $condition, input: $input) {
+  createQuestion(condition: $condition, input: $input) {
+    answers
+    correctAnswer
     createdAt
     id
-    name
     owner
+    testQuestionsId
+    text
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.CreateAuthorMutationVariables,
-  APITypes.CreateAuthorMutation
+  APITypes.CreateQuestionMutationVariables,
+  APITypes.CreateQuestionMutation
 >;
-export const createComment = /* GraphQL */ `mutation CreateComment(
-  $condition: ModelCommentConditionInput
-  $input: CreateCommentInput!
+export const createTest = /* GraphQL */ `mutation CreateTest(
+  $condition: ModelTestConditionInput
+  $input: CreateTestInput!
 ) {
-  createComment(condition: $condition, input: $input) {
-    body
-    commentPostId
+  createTest(condition: $condition, input: $input) {
     createdAt
     id
     owner
-    post {
-      body
-      createdAt
-      id
-      owner
-      postAuthorId
-      title
-      updatedAt
-      __typename
-    }
-    postCommentsId
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.CreateCommentMutationVariables,
-  APITypes.CreateCommentMutation
->;
-export const createPost = /* GraphQL */ `mutation CreatePost(
-  $condition: ModelPostConditionInput
-  $input: CreatePostInput!
-) {
-  createPost(condition: $condition, input: $input) {
-    author {
-      createdAt
-      id
-      name
-      owner
-      updatedAt
-      __typename
-    }
-    body
-    comments {
+    questions {
       nextToken
       __typename
     }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateTestMutationVariables,
+  APITypes.CreateTestMutation
+>;
+export const deleteQuestion = /* GraphQL */ `mutation DeleteQuestion(
+  $condition: ModelQuestionConditionInput
+  $input: DeleteQuestionInput!
+) {
+  deleteQuestion(condition: $condition, input: $input) {
+    answers
+    correctAnswer
     createdAt
     id
     owner
-    postAuthorId
-    title
+    testQuestionsId
+    text
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.CreatePostMutationVariables,
-  APITypes.CreatePostMutation
+  APITypes.DeleteQuestionMutationVariables,
+  APITypes.DeleteQuestionMutation
 >;
-export const createTacoRecipe = /* GraphQL */ `mutation CreateTacoRecipe(
-  $condition: ModelTacoRecipeConditionInput
-  $input: CreateTacoRecipeInput!
+export const deleteTest = /* GraphQL */ `mutation DeleteTest(
+  $condition: ModelTestConditionInput
+  $input: DeleteTestInput!
 ) {
-  createTacoRecipe(condition: $condition, input: $input) {
-    createdAt
-    description
-    id
-    title
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.CreateTacoRecipeMutationVariables,
-  APITypes.CreateTacoRecipeMutation
->;
-export const deleteAuthor = /* GraphQL */ `mutation DeleteAuthor(
-  $condition: ModelAuthorConditionInput
-  $input: DeleteAuthorInput!
-) {
-  deleteAuthor(condition: $condition, input: $input) {
-    createdAt
-    id
-    name
-    owner
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.DeleteAuthorMutationVariables,
-  APITypes.DeleteAuthorMutation
->;
-export const deleteComment = /* GraphQL */ `mutation DeleteComment(
-  $condition: ModelCommentConditionInput
-  $input: DeleteCommentInput!
-) {
-  deleteComment(condition: $condition, input: $input) {
-    body
-    commentPostId
+  deleteTest(condition: $condition, input: $input) {
     createdAt
     id
     owner
-    post {
-      body
-      createdAt
-      id
-      owner
-      postAuthorId
-      title
-      updatedAt
-      __typename
-    }
-    postCommentsId
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.DeleteCommentMutationVariables,
-  APITypes.DeleteCommentMutation
->;
-export const deletePost = /* GraphQL */ `mutation DeletePost(
-  $condition: ModelPostConditionInput
-  $input: DeletePostInput!
-) {
-  deletePost(condition: $condition, input: $input) {
-    author {
-      createdAt
-      id
-      name
-      owner
-      updatedAt
-      __typename
-    }
-    body
-    comments {
+    questions {
       nextToken
       __typename
     }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteTestMutationVariables,
+  APITypes.DeleteTestMutation
+>;
+export const updateQuestion = /* GraphQL */ `mutation UpdateQuestion(
+  $condition: ModelQuestionConditionInput
+  $input: UpdateQuestionInput!
+) {
+  updateQuestion(condition: $condition, input: $input) {
+    answers
+    correctAnswer
     createdAt
     id
     owner
-    postAuthorId
-    title
+    testQuestionsId
+    text
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.DeletePostMutationVariables,
-  APITypes.DeletePostMutation
+  APITypes.UpdateQuestionMutationVariables,
+  APITypes.UpdateQuestionMutation
 >;
-export const deleteTacoRecipe = /* GraphQL */ `mutation DeleteTacoRecipe(
-  $condition: ModelTacoRecipeConditionInput
-  $input: DeleteTacoRecipeInput!
+export const updateTest = /* GraphQL */ `mutation UpdateTest(
+  $condition: ModelTestConditionInput
+  $input: UpdateTestInput!
 ) {
-  deleteTacoRecipe(condition: $condition, input: $input) {
-    createdAt
-    description
-    id
-    title
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.DeleteTacoRecipeMutationVariables,
-  APITypes.DeleteTacoRecipeMutation
->;
-export const updateAuthor = /* GraphQL */ `mutation UpdateAuthor(
-  $condition: ModelAuthorConditionInput
-  $input: UpdateAuthorInput!
-) {
-  updateAuthor(condition: $condition, input: $input) {
-    createdAt
-    id
-    name
-    owner
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.UpdateAuthorMutationVariables,
-  APITypes.UpdateAuthorMutation
->;
-export const updateComment = /* GraphQL */ `mutation UpdateComment(
-  $condition: ModelCommentConditionInput
-  $input: UpdateCommentInput!
-) {
-  updateComment(condition: $condition, input: $input) {
-    body
-    commentPostId
+  updateTest(condition: $condition, input: $input) {
     createdAt
     id
     owner
-    post {
-      body
-      createdAt
-      id
-      owner
-      postAuthorId
-      title
-      updatedAt
-      __typename
-    }
-    postCommentsId
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.UpdateCommentMutationVariables,
-  APITypes.UpdateCommentMutation
->;
-export const updatePost = /* GraphQL */ `mutation UpdatePost(
-  $condition: ModelPostConditionInput
-  $input: UpdatePostInput!
-) {
-  updatePost(condition: $condition, input: $input) {
-    author {
-      createdAt
-      id
-      name
-      owner
-      updatedAt
-      __typename
-    }
-    body
-    comments {
+    questions {
       nextToken
       __typename
     }
-    createdAt
-    id
-    owner
-    postAuthorId
-    title
     updatedAt
     __typename
   }
 }
 ` as GeneratedMutation<
-  APITypes.UpdatePostMutationVariables,
-  APITypes.UpdatePostMutation
->;
-export const updateTacoRecipe = /* GraphQL */ `mutation UpdateTacoRecipe(
-  $condition: ModelTacoRecipeConditionInput
-  $input: UpdateTacoRecipeInput!
-) {
-  updateTacoRecipe(condition: $condition, input: $input) {
-    createdAt
-    description
-    id
-    title
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedMutation<
-  APITypes.UpdateTacoRecipeMutationVariables,
-  APITypes.UpdateTacoRecipeMutation
+  APITypes.UpdateTestMutationVariables,
+  APITypes.UpdateTestMutation
 >;
