@@ -3,6 +3,7 @@ import { Amplify } from 'aws-amplify';
 import {
   Authenticator,
   Button,
+  Card,
   CheckboxField,
   Flex,
   Placeholder,
@@ -15,6 +16,7 @@ import awsExports from '../../amplifyconfiguration.json';
 import useClient from '@/hooks/useClient';
 import * as queries from '../../graphql/queries';
 import { Todo } from '../../graphql/API';
+import { LuDelete, LuSparkles } from 'react-icons/lu';
 
 Amplify.configure({
   ...awsExports,
@@ -74,10 +76,19 @@ export default function Home() {
       <ScrollView paddingBlockEnd="4rem">
         <Flex direction="column" flex="1" padding="large">
           {todos.map((todo) => (
-            <View key={todo.content}>
-              {todo.content}
-              <Button onClick={handleDelete(todo.id)}>X</Button>
-            </View>
+            <Card variation="outlined" key={todo.content}>
+              <Flex direction="row" alignItems="center">
+                <View flex="1">{todo.content}</View>
+                <Button
+                  variation="link"
+                  colorTheme="error"
+                  size="small"
+                  onClick={handleDelete(todo.id)}
+                >
+                  <LuDelete />
+                </Button>
+              </Flex>
+            </Card>
           ))}
           <View as="form" onSubmit={handleSubmit}>
             <TextField
@@ -88,7 +99,9 @@ export default function Home() {
               ref={inputRef}
               outerEndComponent={
                 <>
-                  <Button onClick={generateTodo}>💫</Button>
+                  <Button onClick={generateTodo}>
+                    <LuSparkles />
+                  </Button>
                   <Button type="submit">Create</Button>
                 </>
               }
