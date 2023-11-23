@@ -2,92 +2,111 @@ import * as React from 'react';
 import { Amplify } from 'aws-amplify';
 import {
   Authenticator,
+  Button,
+  Card,
+  CheckboxField,
   Flex,
   Placeholder,
   ScrollView,
+  TextField,
   View,
 } from '@aws-amplify/ui-react';
 import awsExports from '../../amplifyconfiguration.json';
-import { PromptContainer } from '@/components/Conversation/PromptContainer';
-import { ChatMessage } from '@/components/Conversation/ChatMessage';
+
 import useClient from '@/hooks/useClient';
-// import { generateTacoRecipe } from '../../graphql/queries';
 import * as queries from '../../graphql/queries';
+import { Todo } from '../../graphql/API';
+import { LuDelete, LuSparkles } from 'react-icons/lu';
 
 Amplify.configure({
   ...awsExports,
 });
 
-interface Message {
-  content: React.ReactNode;
-  author: 'Human' | 'Assistant';
-}
-
 export default function Home() {
-  const [messages, setMessages] = React.useState<Message[]>([]);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [todos, setTodos] = React.useState<Todo[]>([]);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
   const { client } = useClient();
 
-  React.useEffect(() => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // create todo
+    client.models.Todo.create({
+      // @ts-ignore
+      content: e.target.todo.value,
+    }).then((value) => {
+      setTodos([...todos, value.data as Todo]);
+      // clear the value of inputRef
+      inputRef.current!.value = '';
+    });
+  };
+
+  const handleDelete = (id: string) => () => {
+    client.models.Todo.delete({ id });
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  const generateTodo = () => {
     client
       .graphql({
         query: queries.askBedrock,
         variables: {
-          question: 'When did amplify js launch?',
-          answers: ['wake up', 'make coffee', 'answer emails'],
-          model: 'anthropic.claude-v2',
-          temperature: 0.7,
+          todos: todos.map((todo) => todo.content ?? ''),
         },
       })
       .then((results) => {
-        console.log(results);
-        // console.log(JSON.parse(results.data.askBedrock?.body ?? ''));
+        try {
+          const todo = JSON.parse(
+            results.data.askBedrock?.body ?? ''
+          ).completion;
+          inputRef.current!.value = todo;
+        } catch (error) {
+          console.log(error);
+        }
       });
+  };
+
+  React.useEffect(() => {
+    client.models.Todo.list().then((results) => {
+      setTodos(results.data as Todo[]);
+    });
   }, [client]);
-
-  // const onSendMessage = (message: string) => {
-  //   setIsLoading(true);
-  //   const newMessages = [
-  //     ...messages,
-  //     { content: message, author: 'Human' } as Message,
-  //   ];
-  //   setMessages(newMessages);
-
-  //   const prompt = [...newMessages, { content: '', author: 'Assistant' }]
-  //     .map((message) => {
-  //       return `${message.author}: ${message.content}`;
-  //     })
-  //     .join(`\n\n`);
-
-  //   client
-  //     .graphql({
-  //       query: generateTacoRecipe,
-  //       variables: {
-  //         prompt,
-  //       },
-  //     })
-  //     .then((results) => {
-  //       try {
-  //         const response = JSON.parse(results.data.generateTacoRecipe);
-  //         setMessages([
-  //           ...newMessages,
-  //           { content: response.completion, author: 'Assistant' },
-  //         ]);
-  //         setIsLoading(false);
-  //       } catch (error) {}
-  //     });
-  // };
 
   return (
     <Authenticator>
       <ScrollView paddingBlockEnd="4rem">
         <Flex direction="column" flex="1" padding="large">
-          {messages.map((message, i) => (
-            <ChatMessage key={i} {...message} />
+          {todos.map((todo) => (
+            <Card variation="outlined" key={todo.content}>
+              <Flex direction="row" alignItems="center">
+                <View flex="1">{todo.content}</View>
+                <Button
+                  variation="link"
+                  colorTheme="error"
+                  size="small"
+                  onClick={handleDelete(todo.id)}
+                >
+                  <LuDelete />
+                </Button>
+              </Flex>
+            </Card>
           ))}
-          {isLoading ? <Placeholder /> : null}
-          <View className="chat-footer">
-            {/* <PromptContainer sendMessage={onSendMessage} /> */}
+          <View as="form" onSubmit={handleSubmit}>
+            <TextField
+              label="todo"
+              name="todo"
+              labelHidden
+              placeholder="what to do"
+              ref={inputRef}
+              outerEndComponent={
+                <>
+                  <Button onClick={generateTodo}>
+                    <LuSparkles />
+                  </Button>
+                  <Button type="submit">Create</Button>
+                </>
+              }
+            />
           </View>
         </Flex>
       </ScrollView>
