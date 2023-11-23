@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
-import { Author } from "./graphql/types";
+import { Test } from "./graphql/types";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -16,35 +16,32 @@ export declare type ValidationResponse = {
     errorMessage?: string;
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
-export declare type AuthorUpdateFormInputValues = {
-    name?: string;
+export declare type TestUpdateFormInputValues = {
     owner?: string;
     createdAt?: string;
     updatedAt?: string;
 };
-export declare type AuthorUpdateFormValidationValues = {
-    name?: ValidationFunction<string>;
+export declare type TestUpdateFormValidationValues = {
     owner?: ValidationFunction<string>;
     createdAt?: ValidationFunction<string>;
     updatedAt?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type AuthorUpdateFormOverridesProps = {
-    AuthorUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    name?: PrimitiveOverrideProps<TextFieldProps>;
+export declare type TestUpdateFormOverridesProps = {
+    TestUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
     owner?: PrimitiveOverrideProps<TextFieldProps>;
     createdAt?: PrimitiveOverrideProps<TextFieldProps>;
     updatedAt?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
-export declare type AuthorUpdateFormProps = React.PropsWithChildren<{
-    overrides?: AuthorUpdateFormOverridesProps | undefined | null;
+export declare type TestUpdateFormProps = React.PropsWithChildren<{
+    overrides?: TestUpdateFormOverridesProps | undefined | null;
 } & {
     id?: string;
-    author?: Author;
-    onSubmit?: (fields: AuthorUpdateFormInputValues) => AuthorUpdateFormInputValues;
-    onSuccess?: (fields: AuthorUpdateFormInputValues) => void;
-    onError?: (fields: AuthorUpdateFormInputValues, errorMessage: string) => void;
-    onChange?: (fields: AuthorUpdateFormInputValues) => AuthorUpdateFormInputValues;
-    onValidate?: AuthorUpdateFormValidationValues;
+    test?: Test;
+    onSubmit?: (fields: TestUpdateFormInputValues) => TestUpdateFormInputValues;
+    onSuccess?: (fields: TestUpdateFormInputValues) => void;
+    onError?: (fields: TestUpdateFormInputValues, errorMessage: string) => void;
+    onChange?: (fields: TestUpdateFormInputValues) => TestUpdateFormInputValues;
+    onValidate?: TestUpdateFormValidationValues;
 } & React.CSSProperties>;
-export default function AuthorUpdateForm(props: AuthorUpdateFormProps): React.ReactElement;
+export default function TestUpdateForm(props: TestUpdateFormProps): React.ReactElement;

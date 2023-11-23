@@ -4,13 +4,13 @@ import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { getAuthor } from "./graphql/queries";
-import { updateAuthor } from "./graphql/mutations";
+import { getGame } from "./graphql/queries";
+import { updateGame } from "./graphql/mutations";
 const client = generateClient();
-export default function AuthorUpdateForm(props) {
+export default function GameUpdateForm(props) {
   const {
     id: idProp,
-    author: authorModelProp,
+    game: gameModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -20,44 +20,40 @@ export default function AuthorUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    name: "",
     owner: "",
     createdAt: "",
     updatedAt: "",
   };
-  const [name, setName] = React.useState(initialValues.name);
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [createdAt, setCreatedAt] = React.useState(initialValues.createdAt);
   const [updatedAt, setUpdatedAt] = React.useState(initialValues.updatedAt);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = authorRecord
-      ? { ...initialValues, ...authorRecord }
+    const cleanValues = gameRecord
+      ? { ...initialValues, ...gameRecord }
       : initialValues;
-    setName(cleanValues.name);
     setOwner(cleanValues.owner);
     setCreatedAt(cleanValues.createdAt);
     setUpdatedAt(cleanValues.updatedAt);
     setErrors({});
   };
-  const [authorRecord, setAuthorRecord] = React.useState(authorModelProp);
+  const [gameRecord, setGameRecord] = React.useState(gameModelProp);
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
         ? (
             await client.graphql({
-              query: getAuthor.replaceAll("__typename", ""),
+              query: getGame.replaceAll("__typename", ""),
               variables: { id: idProp },
             })
-          )?.data?.getAuthor
-        : authorModelProp;
-      setAuthorRecord(record);
+          )?.data?.getGame
+        : gameModelProp;
+      setGameRecord(record);
     };
     queryData();
-  }, [idProp, authorModelProp]);
-  React.useEffect(resetStateValues, [authorRecord]);
+  }, [idProp, gameModelProp]);
+  React.useEffect(resetStateValues, [gameRecord]);
   const validations = {
-    name: [],
     owner: [],
     createdAt: [{ type: "Required" }],
     updatedAt: [{ type: "Required" }],
@@ -105,7 +101,6 @@ export default function AuthorUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          name: name ?? null,
           owner: owner ?? null,
           createdAt,
           updatedAt,
@@ -139,10 +134,10 @@ export default function AuthorUpdateForm(props) {
             }
           });
           await client.graphql({
-            query: updateAuthor.replaceAll("__typename", ""),
+            query: updateGame.replaceAll("__typename", ""),
             variables: {
               input: {
-                id: authorRecord.id,
+                id: gameRecord.id,
                 ...modelFields,
               },
             },
@@ -157,36 +152,9 @@ export default function AuthorUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "AuthorUpdateForm")}
+      {...getOverrideProps(overrides, "GameUpdateForm")}
       {...rest}
     >
-      <TextField
-        label="Name"
-        isRequired={false}
-        isReadOnly={false}
-        value={name}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name: value,
-              owner,
-              createdAt,
-              updatedAt,
-            };
-            const result = onChange(modelFields);
-            value = result?.name ?? value;
-          }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
-          }
-          setName(value);
-        }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
-      ></TextField>
       <TextField
         label="Owner"
         isRequired={false}
@@ -196,7 +164,6 @@ export default function AuthorUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name,
               owner: value,
               createdAt,
               updatedAt,
@@ -225,7 +192,6 @@ export default function AuthorUpdateForm(props) {
             e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
-              name,
               owner,
               createdAt: value,
               updatedAt,
@@ -254,7 +220,6 @@ export default function AuthorUpdateForm(props) {
             e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
-              name,
               owner,
               createdAt,
               updatedAt: value,
@@ -283,7 +248,7 @@ export default function AuthorUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || authorModelProp)}
+          isDisabled={!(idProp || gameModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -295,7 +260,7 @@ export default function AuthorUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || authorModelProp) ||
+              !(idProp || gameModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

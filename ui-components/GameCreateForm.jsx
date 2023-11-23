@@ -4,9 +4,9 @@ import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { createAuthor } from "./graphql/mutations";
+import { createGame } from "./graphql/mutations";
 const client = generateClient();
-export default function AuthorCreateForm(props) {
+export default function GameCreateForm(props) {
   const {
     clearOnSuccess = true,
     onSuccess,
@@ -18,25 +18,21 @@ export default function AuthorCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    name: "",
     owner: "",
     createdAt: "",
     updatedAt: "",
   };
-  const [name, setName] = React.useState(initialValues.name);
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [createdAt, setCreatedAt] = React.useState(initialValues.createdAt);
   const [updatedAt, setUpdatedAt] = React.useState(initialValues.updatedAt);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setName(initialValues.name);
     setOwner(initialValues.owner);
     setCreatedAt(initialValues.createdAt);
     setUpdatedAt(initialValues.updatedAt);
     setErrors({});
   };
   const validations = {
-    name: [],
     owner: [],
     createdAt: [{ type: "Required" }],
     updatedAt: [{ type: "Required" }],
@@ -84,7 +80,6 @@ export default function AuthorCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          name,
           owner,
           createdAt,
           updatedAt,
@@ -118,7 +113,7 @@ export default function AuthorCreateForm(props) {
             }
           });
           await client.graphql({
-            query: createAuthor.replaceAll("__typename", ""),
+            query: createGame.replaceAll("__typename", ""),
             variables: {
               input: {
                 ...modelFields,
@@ -138,36 +133,9 @@ export default function AuthorCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "AuthorCreateForm")}
+      {...getOverrideProps(overrides, "GameCreateForm")}
       {...rest}
     >
-      <TextField
-        label="Name"
-        isRequired={false}
-        isReadOnly={false}
-        value={name}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              name: value,
-              owner,
-              createdAt,
-              updatedAt,
-            };
-            const result = onChange(modelFields);
-            value = result?.name ?? value;
-          }
-          if (errors.name?.hasError) {
-            runValidationTasks("name", value);
-          }
-          setName(value);
-        }}
-        onBlur={() => runValidationTasks("name", name)}
-        errorMessage={errors.name?.errorMessage}
-        hasError={errors.name?.hasError}
-        {...getOverrideProps(overrides, "name")}
-      ></TextField>
       <TextField
         label="Owner"
         isRequired={false}
@@ -177,7 +145,6 @@ export default function AuthorCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              name,
               owner: value,
               createdAt,
               updatedAt,
@@ -206,7 +173,6 @@ export default function AuthorCreateForm(props) {
             e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
-              name,
               owner,
               createdAt: value,
               updatedAt,
@@ -235,7 +201,6 @@ export default function AuthorCreateForm(props) {
             e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
-              name,
               owner,
               createdAt,
               updatedAt: value,

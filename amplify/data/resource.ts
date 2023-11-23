@@ -8,77 +8,52 @@ import { defineData, a, ClientSchema, Func } from '@aws-amplify/backend';
 // Game has
 
 const schema = a.schema({
-  // 1. Define your return type as a custom type
-  // 1. Define your return type as a custom type
-  EchoResponse: a.customType({
-    content: a.string(),
-    executionDuration: a.float(),
+  BedrockResponse: a.customType({
+    body: a.string(),
+    error: a.string(),
   }),
 
-  Post: a
+  Todo: a
     .model({
-      title: a.string(),
-      body: a.string(),
-      author: a.hasOne('Author'),
-      comments: a.hasMany('Comment'),
+      content: a.string(),
+      isDone: a.boolean(),
     })
     .authorization([a.allow.public().to(['read']), a.allow.owner()]),
 
-  Comment: a
+  Question: a
     .model({
-      body: a.string(),
-      post: a.hasOne('Post'),
+      text: a.string().required(),
+      answers: a.string().array().required(),
+      correctAnswer: a.string().required(),
+      game: a.belongsTo('Game'),
     })
-    .authorization([a.allow.public().to(['read']), a.allow.owner()]),
+    .authorization([
+      a.allow.public().to(['read']),
+      a.allow.private().to(['create']),
+      a.allow.owner().to(['create', 'update', 'delete', 'read']),
+    ]),
 
-  Author: a
+  Game: a
     .model({
-      name: a.string(),
+      questions: a.hasMany('Question'),
     })
-    .authorization([a.allow.public().to(['read']), a.allow.owner()]),
+    .authorization([
+      a.allow.public().to(['read']),
+      a.allow.owner().to(['create', 'update', 'delete', 'read']),
+    ]),
 
-  // test: a.query().returns(a.ref('EchoResponse')),
-
-  // 2. Define your query with the return type and, optionally, arguments
-  echo: a
-    .query()
-    .arguments({ content: a.string() })
-    .returns(a.ref('EchoResponse'))
-    .authorization([a.allow.private()])
-    // Step 2 - Define a function key ("echoHandler") that will be used
-    // to map this query to the corresponding functions provided to
-    // defineData(...)
-    .function('echoHandler'),
-
-  test: a.query().returns(a.ref('EchoResponse')),
-
-  generateTacoRecipe: a
+  askBedrock: a
     .query()
     .arguments({
-      prompt: a.string(),
+      todos: a.string().array(),
     })
-    .function('generateTacoRecipe')
-    .returns(a.ref('TacoRecipe'))
-    .authorization([a.allow.private()]),
-  TacoRecipe: a
-    .model({
-      id: a.id(),
-      title: a.string(),
-      description: a.string(),
-    })
-    .authorization([a.allow.public()]),
+    .returns(a.ref('BedrockResponse')),
 });
 
 export type Schema = ClientSchema<typeof schema>;
 
 export const data = defineData({
   schema,
-  functions: {
-    echoHandler: Func.fromDir({
-      codePath: './echo',
-      name: 'echoHandlerFunc',
-    }),
-  },
   authorizationModes: {
     defaultAuthorizationMode: 'userPool',
     apiKeyAuthorizationMode: {

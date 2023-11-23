@@ -1,5 +1,6 @@
 import * as React from "react";
 import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { Game } from "./graphql/types";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -15,37 +16,32 @@ export declare type ValidationResponse = {
     errorMessage?: string;
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
-export declare type PostCreateFormInputValues = {
-    title?: string;
-    body?: string;
+export declare type GameUpdateFormInputValues = {
     owner?: string;
     createdAt?: string;
     updatedAt?: string;
 };
-export declare type PostCreateFormValidationValues = {
-    title?: ValidationFunction<string>;
-    body?: ValidationFunction<string>;
+export declare type GameUpdateFormValidationValues = {
     owner?: ValidationFunction<string>;
     createdAt?: ValidationFunction<string>;
     updatedAt?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type PostCreateFormOverridesProps = {
-    PostCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    title?: PrimitiveOverrideProps<TextFieldProps>;
-    body?: PrimitiveOverrideProps<TextFieldProps>;
+export declare type GameUpdateFormOverridesProps = {
+    GameUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
     owner?: PrimitiveOverrideProps<TextFieldProps>;
     createdAt?: PrimitiveOverrideProps<TextFieldProps>;
     updatedAt?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
-export declare type PostCreateFormProps = React.PropsWithChildren<{
-    overrides?: PostCreateFormOverridesProps | undefined | null;
+export declare type GameUpdateFormProps = React.PropsWithChildren<{
+    overrides?: GameUpdateFormOverridesProps | undefined | null;
 } & {
-    clearOnSuccess?: boolean;
-    onSubmit?: (fields: PostCreateFormInputValues) => PostCreateFormInputValues;
-    onSuccess?: (fields: PostCreateFormInputValues) => void;
-    onError?: (fields: PostCreateFormInputValues, errorMessage: string) => void;
-    onChange?: (fields: PostCreateFormInputValues) => PostCreateFormInputValues;
-    onValidate?: PostCreateFormValidationValues;
+    id?: string;
+    game?: Game;
+    onSubmit?: (fields: GameUpdateFormInputValues) => GameUpdateFormInputValues;
+    onSuccess?: (fields: GameUpdateFormInputValues) => void;
+    onError?: (fields: GameUpdateFormInputValues, errorMessage: string) => void;
+    onChange?: (fields: GameUpdateFormInputValues) => GameUpdateFormInputValues;
+    onValidate?: GameUpdateFormValidationValues;
 } & React.CSSProperties>;
-export default function PostCreateForm(props: PostCreateFormProps): React.ReactElement;
+export default function GameUpdateForm(props: GameUpdateFormProps): React.ReactElement;

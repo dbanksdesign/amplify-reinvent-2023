@@ -15,34 +15,31 @@ export declare type ValidationResponse = {
     errorMessage?: string;
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
-export declare type AuthorCreateFormInputValues = {
-    name?: string;
+export declare type GameCreateFormInputValues = {
     owner?: string;
     createdAt?: string;
     updatedAt?: string;
 };
-export declare type AuthorCreateFormValidationValues = {
-    name?: ValidationFunction<string>;
+export declare type GameCreateFormValidationValues = {
     owner?: ValidationFunction<string>;
     createdAt?: ValidationFunction<string>;
     updatedAt?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type AuthorCreateFormOverridesProps = {
-    AuthorCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    name?: PrimitiveOverrideProps<TextFieldProps>;
+export declare type GameCreateFormOverridesProps = {
+    GameCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
     owner?: PrimitiveOverrideProps<TextFieldProps>;
     createdAt?: PrimitiveOverrideProps<TextFieldProps>;
     updatedAt?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
-export declare type AuthorCreateFormProps = React.PropsWithChildren<{
-    overrides?: AuthorCreateFormOverridesProps | undefined | null;
+export declare type GameCreateFormProps = React.PropsWithChildren<{
+    overrides?: GameCreateFormOverridesProps | undefined | null;
 } & {
     clearOnSuccess?: boolean;
-    onSubmit?: (fields: AuthorCreateFormInputValues) => AuthorCreateFormInputValues;
-    onSuccess?: (fields: AuthorCreateFormInputValues) => void;
-    onError?: (fields: AuthorCreateFormInputValues, errorMessage: string) => void;
-    onChange?: (fields: AuthorCreateFormInputValues) => AuthorCreateFormInputValues;
-    onValidate?: AuthorCreateFormValidationValues;
+    onSubmit?: (fields: GameCreateFormInputValues) => GameCreateFormInputValues;
+    onSuccess?: (fields: GameCreateFormInputValues) => void;
+    onError?: (fields: GameCreateFormInputValues, errorMessage: string) => void;
+    onChange?: (fields: GameCreateFormInputValues) => GameCreateFormInputValues;
+    onValidate?: GameCreateFormValidationValues;
 } & React.CSSProperties>;
-export default function AuthorCreateForm(props: AuthorCreateFormProps): React.ReactElement;
+export default function GameCreateForm(props: GameCreateFormProps): React.ReactElement;

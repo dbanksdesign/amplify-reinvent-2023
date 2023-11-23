@@ -4,13 +4,11 @@ import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { getComment } from "./graphql/queries";
-import { updateComment } from "./graphql/mutations";
+import { createTest } from "./graphql/mutations";
 const client = generateClient();
-export default function CommentUpdateForm(props) {
+export default function TestCreateForm(props) {
   const {
-    id: idProp,
-    comment: commentModelProp,
+    clearOnSuccess = true,
     onSuccess,
     onError,
     onSubmit,
@@ -20,44 +18,21 @@ export default function CommentUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    body: "",
     owner: "",
     createdAt: "",
     updatedAt: "",
   };
-  const [body, setBody] = React.useState(initialValues.body);
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [createdAt, setCreatedAt] = React.useState(initialValues.createdAt);
   const [updatedAt, setUpdatedAt] = React.useState(initialValues.updatedAt);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = commentRecord
-      ? { ...initialValues, ...commentRecord }
-      : initialValues;
-    setBody(cleanValues.body);
-    setOwner(cleanValues.owner);
-    setCreatedAt(cleanValues.createdAt);
-    setUpdatedAt(cleanValues.updatedAt);
+    setOwner(initialValues.owner);
+    setCreatedAt(initialValues.createdAt);
+    setUpdatedAt(initialValues.updatedAt);
     setErrors({});
   };
-  const [commentRecord, setCommentRecord] = React.useState(commentModelProp);
-  React.useEffect(() => {
-    const queryData = async () => {
-      const record = idProp
-        ? (
-            await client.graphql({
-              query: getComment.replaceAll("__typename", ""),
-              variables: { id: idProp },
-            })
-          )?.data?.getComment
-        : commentModelProp;
-      setCommentRecord(record);
-    };
-    queryData();
-  }, [idProp, commentModelProp]);
-  React.useEffect(resetStateValues, [commentRecord]);
   const validations = {
-    body: [],
     owner: [],
     createdAt: [{ type: "Required" }],
     updatedAt: [{ type: "Required" }],
@@ -105,8 +80,7 @@ export default function CommentUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          body: body ?? null,
-          owner: owner ?? null,
+          owner,
           createdAt,
           updatedAt,
         };
@@ -139,16 +113,18 @@ export default function CommentUpdateForm(props) {
             }
           });
           await client.graphql({
-            query: updateComment.replaceAll("__typename", ""),
+            query: createTest.replaceAll("__typename", ""),
             variables: {
               input: {
-                id: commentRecord.id,
                 ...modelFields,
               },
             },
           });
           if (onSuccess) {
             onSuccess(modelFields);
+          }
+          if (clearOnSuccess) {
+            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -157,36 +133,9 @@ export default function CommentUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "CommentUpdateForm")}
+      {...getOverrideProps(overrides, "TestCreateForm")}
       {...rest}
     >
-      <TextField
-        label="Body"
-        isRequired={false}
-        isReadOnly={false}
-        value={body}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              body: value,
-              owner,
-              createdAt,
-              updatedAt,
-            };
-            const result = onChange(modelFields);
-            value = result?.body ?? value;
-          }
-          if (errors.body?.hasError) {
-            runValidationTasks("body", value);
-          }
-          setBody(value);
-        }}
-        onBlur={() => runValidationTasks("body", body)}
-        errorMessage={errors.body?.errorMessage}
-        hasError={errors.body?.hasError}
-        {...getOverrideProps(overrides, "body")}
-      ></TextField>
       <TextField
         label="Owner"
         isRequired={false}
@@ -196,7 +145,6 @@ export default function CommentUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              body,
               owner: value,
               createdAt,
               updatedAt,
@@ -225,7 +173,6 @@ export default function CommentUpdateForm(props) {
             e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
-              body,
               owner,
               createdAt: value,
               updatedAt,
@@ -254,7 +201,6 @@ export default function CommentUpdateForm(props) {
             e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
-              body,
               owner,
               createdAt,
               updatedAt: value,
@@ -277,14 +223,13 @@ export default function CommentUpdateForm(props) {
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Reset"
+          children="Clear"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || commentModelProp)}
-          {...getOverrideProps(overrides, "ResetButton")}
+          {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -294,10 +239,7 @@ export default function CommentUpdateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || commentModelProp) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

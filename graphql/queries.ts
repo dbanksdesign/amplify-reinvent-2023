@@ -8,230 +8,151 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
-export const echo = /* GraphQL */ `query Echo($content: String) {
-  echo(content: $content) {
-    content
-    executionDuration
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.EchoQueryVariables, APITypes.EchoQuery>;
-export const generateTacoRecipe = /* GraphQL */ `query GenerateTacoRecipe($prompt: String) {
-  generateTacoRecipe(prompt: $prompt) {
-    createdAt
-    description
-    id
-    title
-    updatedAt
+export const askBedrock = /* GraphQL */ `query AskBedrock($todos: [String]) {
+  askBedrock(todos: $todos) {
+    body
+    error
     __typename
   }
 }
 ` as GeneratedQuery<
-  APITypes.GenerateTacoRecipeQueryVariables,
-  APITypes.GenerateTacoRecipeQuery
+  APITypes.AskBedrockQueryVariables,
+  APITypes.AskBedrockQuery
 >;
-export const getAuthor = /* GraphQL */ `query GetAuthor($id: ID!) {
-  getAuthor(id: $id) {
-    createdAt
-    id
-    name
-    owner
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.GetAuthorQueryVariables, APITypes.GetAuthorQuery>;
-export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
-  getComment(id: $id) {
-    body
-    commentPostId
+export const getGame = /* GraphQL */ `query GetGame($id: ID!) {
+  getGame(id: $id) {
     createdAt
     id
     owner
-    post {
-      body
-      createdAt
-      id
-      owner
-      postAuthorId
-      title
-      updatedAt
-      __typename
-    }
-    postCommentsId
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.GetCommentQueryVariables,
-  APITypes.GetCommentQuery
->;
-export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
-  getPost(id: $id) {
-    author {
-      createdAt
-      id
-      name
-      owner
-      updatedAt
-      __typename
-    }
-    body
-    comments {
+    questions {
       nextToken
       __typename
     }
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.GetGameQueryVariables, APITypes.GetGameQuery>;
+export const getQuestion = /* GraphQL */ `query GetQuestion($id: ID!) {
+  getQuestion(id: $id) {
+    answers
+    correctAnswer
     createdAt
+    game {
+      createdAt
+      id
+      owner
+      updatedAt
+      __typename
+    }
+    gameQuestionsId
     id
     owner
-    postAuthorId
-    title
-    updatedAt
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.GetPostQueryVariables, APITypes.GetPostQuery>;
-export const getTacoRecipe = /* GraphQL */ `query GetTacoRecipe($id: ID!) {
-  getTacoRecipe(id: $id) {
-    createdAt
-    description
-    id
-    title
+    text
     updatedAt
     __typename
   }
 }
 ` as GeneratedQuery<
-  APITypes.GetTacoRecipeQueryVariables,
-  APITypes.GetTacoRecipeQuery
+  APITypes.GetQuestionQueryVariables,
+  APITypes.GetQuestionQuery
 >;
-export const listAuthors = /* GraphQL */ `query ListAuthors(
-  $filter: ModelAuthorFilterInput
-  $id: ID
-  $limit: Int
-  $nextToken: String
-  $sortDirection: ModelSortDirection
-) {
-  listAuthors(
-    filter: $filter
-    id: $id
-    limit: $limit
-    nextToken: $nextToken
-    sortDirection: $sortDirection
-  ) {
-    items {
-      createdAt
-      id
-      name
-      owner
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ListAuthorsQueryVariables,
-  APITypes.ListAuthorsQuery
->;
-export const listComments = /* GraphQL */ `query ListComments(
-  $filter: ModelCommentFilterInput
-  $id: ID
-  $limit: Int
-  $nextToken: String
-  $sortDirection: ModelSortDirection
-) {
-  listComments(
-    filter: $filter
-    id: $id
-    limit: $limit
-    nextToken: $nextToken
-    sortDirection: $sortDirection
-  ) {
-    items {
-      body
-      commentPostId
-      createdAt
-      id
-      owner
-      postCommentsId
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ListCommentsQueryVariables,
-  APITypes.ListCommentsQuery
->;
-export const listPosts = /* GraphQL */ `query ListPosts(
-  $filter: ModelPostFilterInput
-  $id: ID
-  $limit: Int
-  $nextToken: String
-  $sortDirection: ModelSortDirection
-) {
-  listPosts(
-    filter: $filter
-    id: $id
-    limit: $limit
-    nextToken: $nextToken
-    sortDirection: $sortDirection
-  ) {
-    items {
-      body
-      createdAt
-      id
-      owner
-      postAuthorId
-      title
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<APITypes.ListPostsQueryVariables, APITypes.ListPostsQuery>;
-export const listTacoRecipes = /* GraphQL */ `query ListTacoRecipes(
-  $filter: ModelTacoRecipeFilterInput
-  $id: ID
-  $limit: Int
-  $nextToken: String
-  $sortDirection: ModelSortDirection
-) {
-  listTacoRecipes(
-    filter: $filter
-    id: $id
-    limit: $limit
-    nextToken: $nextToken
-    sortDirection: $sortDirection
-  ) {
-    items {
-      createdAt
-      description
-      id
-      title
-      updatedAt
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ListTacoRecipesQueryVariables,
-  APITypes.ListTacoRecipesQuery
->;
-export const test = /* GraphQL */ `query Test {
-  test {
+export const getTodo = /* GraphQL */ `query GetTodo($id: ID!) {
+  getTodo(id: $id) {
     content
-    executionDuration
+    createdAt
+    id
+    isDone
+    owner
+    updatedAt
     __typename
   }
 }
-` as GeneratedQuery<APITypes.TestQueryVariables, APITypes.TestQuery>;
+` as GeneratedQuery<APITypes.GetTodoQueryVariables, APITypes.GetTodoQuery>;
+export const listGames = /* GraphQL */ `query ListGames(
+  $filter: ModelGameFilterInput
+  $id: ID
+  $limit: Int
+  $nextToken: String
+  $sortDirection: ModelSortDirection
+) {
+  listGames(
+    filter: $filter
+    id: $id
+    limit: $limit
+    nextToken: $nextToken
+    sortDirection: $sortDirection
+  ) {
+    items {
+      createdAt
+      id
+      owner
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.ListGamesQueryVariables, APITypes.ListGamesQuery>;
+export const listQuestions = /* GraphQL */ `query ListQuestions(
+  $filter: ModelQuestionFilterInput
+  $id: ID
+  $limit: Int
+  $nextToken: String
+  $sortDirection: ModelSortDirection
+) {
+  listQuestions(
+    filter: $filter
+    id: $id
+    limit: $limit
+    nextToken: $nextToken
+    sortDirection: $sortDirection
+  ) {
+    items {
+      answers
+      correctAnswer
+      createdAt
+      gameQuestionsId
+      id
+      owner
+      text
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListQuestionsQueryVariables,
+  APITypes.ListQuestionsQuery
+>;
+export const listTodos = /* GraphQL */ `query ListTodos(
+  $filter: ModelTodoFilterInput
+  $id: ID
+  $limit: Int
+  $nextToken: String
+  $sortDirection: ModelSortDirection
+) {
+  listTodos(
+    filter: $filter
+    id: $id
+    limit: $limit
+    nextToken: $nextToken
+    sortDirection: $sortDirection
+  ) {
+    items {
+      content
+      createdAt
+      id
+      isDone
+      owner
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<APITypes.ListTodosQueryVariables, APITypes.ListTodosQuery>;

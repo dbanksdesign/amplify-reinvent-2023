@@ -2,68 +2,56 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type EchoResponse = {
-  __typename: "EchoResponse",
-  content?: string | null,
-  executionDuration?: number | null,
-};
-
-export type TacoRecipe = {
-  __typename: "TacoRecipe",
-  createdAt: string,
-  description?: string | null,
-  id: string,
-  title?: string | null,
-  updatedAt: string,
-};
-
-export type Author = {
-  __typename: "Author",
-  createdAt: string,
-  id: string,
-  name?: string | null,
-  owner?: string | null,
-  updatedAt: string,
-};
-
-export type Comment = {
-  __typename: "Comment",
+export type BedrockResponse = {
+  __typename: "BedrockResponse",
   body?: string | null,
-  commentPostId?: string | null,
+  error?: string | null,
+};
+
+export type Game = {
+  __typename: "Game",
   createdAt: string,
   id: string,
   owner?: string | null,
-  post?: Post | null,
-  postCommentsId?: string | null,
+  questions?: ModelQuestionConnection | null,
   updatedAt: string,
 };
 
-export type Post = {
-  __typename: "Post",
-  author?: Author | null,
-  body?: string | null,
-  comments?: ModelCommentConnection | null,
-  createdAt: string,
-  id: string,
-  owner?: string | null,
-  postAuthorId?: string | null,
-  title?: string | null,
-  updatedAt: string,
-};
-
-export type ModelCommentConnection = {
-  __typename: "ModelCommentConnection",
-  items:  Array<Comment | null >,
+export type ModelQuestionConnection = {
+  __typename: "ModelQuestionConnection",
+  items:  Array<Question | null >,
   nextToken?: string | null,
 };
 
-export type ModelAuthorFilterInput = {
-  and?: Array< ModelAuthorFilterInput | null > | null,
+export type Question = {
+  __typename: "Question",
+  answers: Array< string | null >,
+  correctAnswer: string,
+  createdAt: string,
+  game?: Game | null,
+  gameQuestionsId?: string | null,
+  id: string,
+  owner?: string | null,
+  text: string,
+  updatedAt: string,
+};
+
+export type Todo = {
+  __typename: "Todo",
+  content?: string | null,
+  createdAt: string,
+  id: string,
+  isDone?: boolean | null,
+  owner?: string | null,
+  updatedAt: string,
+};
+
+export type ModelGameFilterInput = {
+  and?: Array< ModelGameFilterInput | null > | null,
   createdAt?: ModelStringInput | null,
   id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
-  not?: ModelAuthorFilterInput | null,
-  or?: Array< ModelAuthorFilterInput | null > | null,
+  not?: ModelGameFilterInput | null,
+  or?: Array< ModelGameFilterInput | null > | null,
   owner?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
@@ -130,199 +118,155 @@ export enum ModelSortDirection {
 }
 
 
-export type ModelAuthorConnection = {
-  __typename: "ModelAuthorConnection",
-  items:  Array<Author | null >,
+export type ModelGameConnection = {
+  __typename: "ModelGameConnection",
+  items:  Array<Game | null >,
   nextToken?: string | null,
 };
 
-export type ModelCommentFilterInput = {
-  and?: Array< ModelCommentFilterInput | null > | null,
-  body?: ModelStringInput | null,
-  commentPostId?: ModelIDInput | null,
+export type ModelQuestionFilterInput = {
+  and?: Array< ModelQuestionFilterInput | null > | null,
+  answers?: ModelStringInput | null,
+  correctAnswer?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
+  gameQuestionsId?: ModelIDInput | null,
   id?: ModelIDInput | null,
-  not?: ModelCommentFilterInput | null,
-  or?: Array< ModelCommentFilterInput | null > | null,
+  not?: ModelQuestionFilterInput | null,
+  or?: Array< ModelQuestionFilterInput | null > | null,
   owner?: ModelStringInput | null,
-  postCommentsId?: ModelIDInput | null,
+  text?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
 
-export type ModelPostFilterInput = {
-  and?: Array< ModelPostFilterInput | null > | null,
-  body?: ModelStringInput | null,
+export type ModelTodoFilterInput = {
+  and?: Array< ModelTodoFilterInput | null > | null,
+  content?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   id?: ModelIDInput | null,
-  not?: ModelPostFilterInput | null,
-  or?: Array< ModelPostFilterInput | null > | null,
+  isDone?: ModelBooleanInput | null,
+  not?: ModelTodoFilterInput | null,
+  or?: Array< ModelTodoFilterInput | null > | null,
   owner?: ModelStringInput | null,
-  postAuthorId?: ModelIDInput | null,
-  title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
 
-export type ModelPostConnection = {
-  __typename: "ModelPostConnection",
-  items:  Array<Post | null >,
+export type ModelBooleanInput = {
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  eq?: boolean | null,
+  ne?: boolean | null,
+};
+
+export type ModelTodoConnection = {
+  __typename: "ModelTodoConnection",
+  items:  Array<Todo | null >,
   nextToken?: string | null,
 };
 
-export type ModelTacoRecipeFilterInput = {
-  and?: Array< ModelTacoRecipeFilterInput | null > | null,
+export type ModelGameConditionInput = {
+  and?: Array< ModelGameConditionInput | null > | null,
   createdAt?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  id?: ModelIDInput | null,
-  not?: ModelTacoRecipeFilterInput | null,
-  or?: Array< ModelTacoRecipeFilterInput | null > | null,
-  title?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-};
-
-export type ModelTacoRecipeConnection = {
-  __typename: "ModelTacoRecipeConnection",
-  items:  Array<TacoRecipe | null >,
-  nextToken?: string | null,
-};
-
-export type ModelAuthorConditionInput = {
-  and?: Array< ModelAuthorConditionInput | null > | null,
-  createdAt?: ModelStringInput | null,
-  name?: ModelStringInput | null,
-  not?: ModelAuthorConditionInput | null,
-  or?: Array< ModelAuthorConditionInput | null > | null,
+  not?: ModelGameConditionInput | null,
+  or?: Array< ModelGameConditionInput | null > | null,
   owner?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
 
-export type CreateAuthorInput = {
+export type CreateGameInput = {
   createdAt?: string | null,
   id?: string | null,
-  name?: string | null,
   owner?: string | null,
   updatedAt?: string | null,
 };
 
-export type ModelCommentConditionInput = {
-  and?: Array< ModelCommentConditionInput | null > | null,
-  body?: ModelStringInput | null,
-  commentPostId?: ModelIDInput | null,
+export type ModelQuestionConditionInput = {
+  and?: Array< ModelQuestionConditionInput | null > | null,
+  answers?: ModelStringInput | null,
+  correctAnswer?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  not?: ModelCommentConditionInput | null,
-  or?: Array< ModelCommentConditionInput | null > | null,
+  gameQuestionsId?: ModelIDInput | null,
+  not?: ModelQuestionConditionInput | null,
+  or?: Array< ModelQuestionConditionInput | null > | null,
   owner?: ModelStringInput | null,
-  postCommentsId?: ModelIDInput | null,
+  text?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
 
-export type CreateCommentInput = {
-  body?: string | null,
-  commentPostId?: string | null,
+export type CreateQuestionInput = {
+  answers: Array< string | null >,
+  correctAnswer: string,
   createdAt?: string | null,
+  gameQuestionsId?: string | null,
   id?: string | null,
   owner?: string | null,
-  postCommentsId?: string | null,
+  text: string,
   updatedAt?: string | null,
 };
 
-export type ModelPostConditionInput = {
-  and?: Array< ModelPostConditionInput | null > | null,
-  body?: ModelStringInput | null,
+export type ModelTodoConditionInput = {
+  and?: Array< ModelTodoConditionInput | null > | null,
+  content?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
-  not?: ModelPostConditionInput | null,
-  or?: Array< ModelPostConditionInput | null > | null,
+  isDone?: ModelBooleanInput | null,
+  not?: ModelTodoConditionInput | null,
+  or?: Array< ModelTodoConditionInput | null > | null,
   owner?: ModelStringInput | null,
-  postAuthorId?: ModelIDInput | null,
-  title?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
 };
 
-export type CreatePostInput = {
-  body?: string | null,
+export type CreateTodoInput = {
+  content?: string | null,
   createdAt?: string | null,
   id?: string | null,
-  owner?: string | null,
-  postAuthorId?: string | null,
-  title?: string | null,
-  updatedAt?: string | null,
-};
-
-export type ModelTacoRecipeConditionInput = {
-  and?: Array< ModelTacoRecipeConditionInput | null > | null,
-  createdAt?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  not?: ModelTacoRecipeConditionInput | null,
-  or?: Array< ModelTacoRecipeConditionInput | null > | null,
-  title?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-};
-
-export type CreateTacoRecipeInput = {
-  createdAt?: string | null,
-  description?: string | null,
-  id?: string | null,
-  title?: string | null,
-  updatedAt?: string | null,
-};
-
-export type DeleteAuthorInput = {
-  id: string,
-};
-
-export type DeleteCommentInput = {
-  id: string,
-};
-
-export type DeletePostInput = {
-  id: string,
-};
-
-export type DeleteTacoRecipeInput = {
-  id: string,
-};
-
-export type UpdateAuthorInput = {
-  createdAt?: string | null,
-  id: string,
-  name?: string | null,
+  isDone?: boolean | null,
   owner?: string | null,
   updatedAt?: string | null,
 };
 
-export type UpdateCommentInput = {
-  body?: string | null,
-  commentPostId?: string | null,
+export type DeleteGameInput = {
+  id: string,
+};
+
+export type DeleteQuestionInput = {
+  id: string,
+};
+
+export type DeleteTodoInput = {
+  id: string,
+};
+
+export type UpdateGameInput = {
   createdAt?: string | null,
   id: string,
   owner?: string | null,
-  postCommentsId?: string | null,
   updatedAt?: string | null,
 };
 
-export type UpdatePostInput = {
-  body?: string | null,
+export type UpdateQuestionInput = {
+  answers?: Array< string | null > | null,
+  correctAnswer?: string | null,
   createdAt?: string | null,
+  gameQuestionsId?: string | null,
   id: string,
   owner?: string | null,
-  postAuthorId?: string | null,
-  title?: string | null,
+  text?: string | null,
   updatedAt?: string | null,
 };
 
-export type UpdateTacoRecipeInput = {
+export type UpdateTodoInput = {
+  content?: string | null,
   createdAt?: string | null,
-  description?: string | null,
   id: string,
-  title?: string | null,
+  isDone?: boolean | null,
+  owner?: string | null,
   updatedAt?: string | null,
 };
 
-export type ModelSubscriptionAuthorFilterInput = {
-  and?: Array< ModelSubscriptionAuthorFilterInput | null > | null,
+export type ModelSubscriptionGameFilterInput = {
+  and?: Array< ModelSubscriptionGameFilterInput | null > | null,
   createdAt?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
-  name?: ModelSubscriptionStringInput | null,
-  or?: Array< ModelSubscriptionAuthorFilterInput | null > | null,
+  or?: Array< ModelSubscriptionGameFilterInput | null > | null,
   updatedAt?: ModelSubscriptionStringInput | null,
 };
 
@@ -356,788 +300,544 @@ export type ModelSubscriptionIDInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionCommentFilterInput = {
-  and?: Array< ModelSubscriptionCommentFilterInput | null > | null,
-  body?: ModelSubscriptionStringInput | null,
-  commentPostId?: ModelSubscriptionIDInput | null,
+export type ModelSubscriptionQuestionFilterInput = {
+  and?: Array< ModelSubscriptionQuestionFilterInput | null > | null,
+  answers?: ModelSubscriptionStringInput | null,
+  correctAnswer?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
+  gameQuestionsId?: ModelSubscriptionIDInput | null,
   id?: ModelSubscriptionIDInput | null,
-  or?: Array< ModelSubscriptionCommentFilterInput | null > | null,
-  postCommentsId?: ModelSubscriptionIDInput | null,
+  or?: Array< ModelSubscriptionQuestionFilterInput | null > | null,
+  text?: ModelSubscriptionStringInput | null,
   updatedAt?: ModelSubscriptionStringInput | null,
 };
 
-export type ModelSubscriptionPostFilterInput = {
-  and?: Array< ModelSubscriptionPostFilterInput | null > | null,
-  body?: ModelSubscriptionStringInput | null,
+export type ModelSubscriptionTodoFilterInput = {
+  and?: Array< ModelSubscriptionTodoFilterInput | null > | null,
+  content?: ModelSubscriptionStringInput | null,
   createdAt?: ModelSubscriptionStringInput | null,
   id?: ModelSubscriptionIDInput | null,
-  or?: Array< ModelSubscriptionPostFilterInput | null > | null,
-  postAuthorId?: ModelSubscriptionIDInput | null,
-  title?: ModelSubscriptionStringInput | null,
+  isDone?: ModelSubscriptionBooleanInput | null,
+  or?: Array< ModelSubscriptionTodoFilterInput | null > | null,
   updatedAt?: ModelSubscriptionStringInput | null,
 };
 
-export type ModelSubscriptionTacoRecipeFilterInput = {
-  and?: Array< ModelSubscriptionTacoRecipeFilterInput | null > | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  description?: ModelSubscriptionStringInput | null,
-  id?: ModelSubscriptionIDInput | null,
-  or?: Array< ModelSubscriptionTacoRecipeFilterInput | null > | null,
-  title?: ModelSubscriptionStringInput | null,
-  updatedAt?: ModelSubscriptionStringInput | null,
+export type ModelSubscriptionBooleanInput = {
+  eq?: boolean | null,
+  ne?: boolean | null,
 };
 
-export type EchoQueryVariables = {
-  content?: string | null,
+export type AskBedrockQueryVariables = {
+  todos?: Array< string | null > | null,
 };
 
-export type EchoQuery = {
-  echo?:  {
-    __typename: "EchoResponse",
+export type AskBedrockQuery = {
+  askBedrock?:  {
+    __typename: "BedrockResponse",
+    body?: string | null,
+    error?: string | null,
+  } | null,
+};
+
+export type GetGameQueryVariables = {
+  id: string,
+};
+
+export type GetGameQuery = {
+  getGame?:  {
+    __typename: "Game",
+    createdAt: string,
+    id: string,
+    owner?: string | null,
+    questions?:  {
+      __typename: "ModelQuestionConnection",
+      nextToken?: string | null,
+    } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type GetQuestionQueryVariables = {
+  id: string,
+};
+
+export type GetQuestionQuery = {
+  getQuestion?:  {
+    __typename: "Question",
+    answers: Array< string | null >,
+    correctAnswer: string,
+    createdAt: string,
+    game?:  {
+      __typename: "Game",
+      createdAt: string,
+      id: string,
+      owner?: string | null,
+      updatedAt: string,
+    } | null,
+    gameQuestionsId?: string | null,
+    id: string,
+    owner?: string | null,
+    text: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type GetTodoQueryVariables = {
+  id: string,
+};
+
+export type GetTodoQuery = {
+  getTodo?:  {
+    __typename: "Todo",
     content?: string | null,
-    executionDuration?: number | null,
-  } | null,
-};
-
-export type GenerateTacoRecipeQueryVariables = {
-  prompt?: string | null,
-};
-
-export type GenerateTacoRecipeQuery = {
-  generateTacoRecipe?:  {
-    __typename: "TacoRecipe",
-    createdAt: string,
-    description?: string | null,
-    id: string,
-    title?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type GetAuthorQueryVariables = {
-  id: string,
-};
-
-export type GetAuthorQuery = {
-  getAuthor?:  {
-    __typename: "Author",
     createdAt: string,
     id: string,
-    name?: string | null,
+    isDone?: boolean | null,
     owner?: string | null,
     updatedAt: string,
   } | null,
 };
 
-export type GetCommentQueryVariables = {
-  id: string,
+export type ListGamesQueryVariables = {
+  filter?: ModelGameFilterInput | null,
+  id?: string | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
-export type GetCommentQuery = {
-  getComment?:  {
-    __typename: "Comment",
-    body?: string | null,
-    commentPostId?: string | null,
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    post?:  {
-      __typename: "Post",
-      body?: string | null,
+export type ListGamesQuery = {
+  listGames?:  {
+    __typename: "ModelGameConnection",
+    items:  Array< {
+      __typename: "Game",
       createdAt: string,
       id: string,
       owner?: string | null,
-      postAuthorId?: string | null,
-      title?: string | null,
       updatedAt: string,
-    } | null,
-    postCommentsId?: string | null,
-    updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
   } | null,
 };
 
-export type GetPostQueryVariables = {
-  id: string,
+export type ListQuestionsQueryVariables = {
+  filter?: ModelQuestionFilterInput | null,
+  id?: string | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
-export type GetPostQuery = {
-  getPost?:  {
-    __typename: "Post",
-    author?:  {
-      __typename: "Author",
+export type ListQuestionsQuery = {
+  listQuestions?:  {
+    __typename: "ModelQuestionConnection",
+    items:  Array< {
+      __typename: "Question",
+      answers: Array< string | null >,
+      correctAnswer: string,
+      createdAt: string,
+      gameQuestionsId?: string | null,
+      id: string,
+      owner?: string | null,
+      text: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ListTodosQueryVariables = {
+  filter?: ModelTodoFilterInput | null,
+  id?: string | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
+};
+
+export type ListTodosQuery = {
+  listTodos?:  {
+    __typename: "ModelTodoConnection",
+    items:  Array< {
+      __typename: "Todo",
+      content?: string | null,
       createdAt: string,
       id: string,
-      name?: string | null,
+      isDone?: boolean | null,
       owner?: string | null,
       updatedAt: string,
-    } | null,
-    body?: string | null,
-    comments?:  {
-      __typename: "ModelCommentConnection",
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type CreateGameMutationVariables = {
+  condition?: ModelGameConditionInput | null,
+  input: CreateGameInput,
+};
+
+export type CreateGameMutation = {
+  createGame?:  {
+    __typename: "Game",
+    createdAt: string,
+    id: string,
+    owner?: string | null,
+    questions?:  {
+      __typename: "ModelQuestionConnection",
       nextToken?: string | null,
     } | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateQuestionMutationVariables = {
+  condition?: ModelQuestionConditionInput | null,
+  input: CreateQuestionInput,
+};
+
+export type CreateQuestionMutation = {
+  createQuestion?:  {
+    __typename: "Question",
+    answers: Array< string | null >,
+    correctAnswer: string,
     createdAt: string,
+    game?:  {
+      __typename: "Game",
+      createdAt: string,
+      id: string,
+      owner?: string | null,
+      updatedAt: string,
+    } | null,
+    gameQuestionsId?: string | null,
     id: string,
     owner?: string | null,
-    postAuthorId?: string | null,
-    title?: string | null,
+    text: string,
     updatedAt: string,
   } | null,
 };
 
-export type GetTacoRecipeQueryVariables = {
-  id: string,
+export type CreateTodoMutationVariables = {
+  condition?: ModelTodoConditionInput | null,
+  input: CreateTodoInput,
 };
 
-export type GetTacoRecipeQuery = {
-  getTacoRecipe?:  {
-    __typename: "TacoRecipe",
-    createdAt: string,
-    description?: string | null,
-    id: string,
-    title?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListAuthorsQueryVariables = {
-  filter?: ModelAuthorFilterInput | null,
-  id?: string | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
-};
-
-export type ListAuthorsQuery = {
-  listAuthors?:  {
-    __typename: "ModelAuthorConnection",
-    items:  Array< {
-      __typename: "Author",
-      createdAt: string,
-      id: string,
-      name?: string | null,
-      owner?: string | null,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type ListCommentsQueryVariables = {
-  filter?: ModelCommentFilterInput | null,
-  id?: string | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
-};
-
-export type ListCommentsQuery = {
-  listComments?:  {
-    __typename: "ModelCommentConnection",
-    items:  Array< {
-      __typename: "Comment",
-      body?: string | null,
-      commentPostId?: string | null,
-      createdAt: string,
-      id: string,
-      owner?: string | null,
-      postCommentsId?: string | null,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type ListPostsQueryVariables = {
-  filter?: ModelPostFilterInput | null,
-  id?: string | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
-};
-
-export type ListPostsQuery = {
-  listPosts?:  {
-    __typename: "ModelPostConnection",
-    items:  Array< {
-      __typename: "Post",
-      body?: string | null,
-      createdAt: string,
-      id: string,
-      owner?: string | null,
-      postAuthorId?: string | null,
-      title?: string | null,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type ListTacoRecipesQueryVariables = {
-  filter?: ModelTacoRecipeFilterInput | null,
-  id?: string | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
-};
-
-export type ListTacoRecipesQuery = {
-  listTacoRecipes?:  {
-    __typename: "ModelTacoRecipeConnection",
-    items:  Array< {
-      __typename: "TacoRecipe",
-      createdAt: string,
-      description?: string | null,
-      id: string,
-      title?: string | null,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type TestQuery = {
-  test?:  {
-    __typename: "EchoResponse",
+export type CreateTodoMutation = {
+  createTodo?:  {
+    __typename: "Todo",
     content?: string | null,
-    executionDuration?: number | null,
-  } | null,
-};
-
-export type CreateAuthorMutationVariables = {
-  condition?: ModelAuthorConditionInput | null,
-  input: CreateAuthorInput,
-};
-
-export type CreateAuthorMutation = {
-  createAuthor?:  {
-    __typename: "Author",
     createdAt: string,
     id: string,
-    name?: string | null,
+    isDone?: boolean | null,
     owner?: string | null,
     updatedAt: string,
   } | null,
 };
 
-export type CreateCommentMutationVariables = {
-  condition?: ModelCommentConditionInput | null,
-  input: CreateCommentInput,
+export type DeleteGameMutationVariables = {
+  condition?: ModelGameConditionInput | null,
+  input: DeleteGameInput,
 };
 
-export type CreateCommentMutation = {
-  createComment?:  {
-    __typename: "Comment",
-    body?: string | null,
-    commentPostId?: string | null,
+export type DeleteGameMutation = {
+  deleteGame?:  {
+    __typename: "Game",
     createdAt: string,
     id: string,
     owner?: string | null,
-    post?:  {
-      __typename: "Post",
-      body?: string | null,
-      createdAt: string,
-      id: string,
-      owner?: string | null,
-      postAuthorId?: string | null,
-      title?: string | null,
-      updatedAt: string,
-    } | null,
-    postCommentsId?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type CreatePostMutationVariables = {
-  condition?: ModelPostConditionInput | null,
-  input: CreatePostInput,
-};
-
-export type CreatePostMutation = {
-  createPost?:  {
-    __typename: "Post",
-    author?:  {
-      __typename: "Author",
-      createdAt: string,
-      id: string,
-      name?: string | null,
-      owner?: string | null,
-      updatedAt: string,
-    } | null,
-    body?: string | null,
-    comments?:  {
-      __typename: "ModelCommentConnection",
+    questions?:  {
+      __typename: "ModelQuestionConnection",
       nextToken?: string | null,
     } | null,
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    postAuthorId?: string | null,
-    title?: string | null,
     updatedAt: string,
   } | null,
 };
 
-export type CreateTacoRecipeMutationVariables = {
-  condition?: ModelTacoRecipeConditionInput | null,
-  input: CreateTacoRecipeInput,
+export type DeleteQuestionMutationVariables = {
+  condition?: ModelQuestionConditionInput | null,
+  input: DeleteQuestionInput,
 };
 
-export type CreateTacoRecipeMutation = {
-  createTacoRecipe?:  {
-    __typename: "TacoRecipe",
+export type DeleteQuestionMutation = {
+  deleteQuestion?:  {
+    __typename: "Question",
+    answers: Array< string | null >,
+    correctAnswer: string,
     createdAt: string,
-    description?: string | null,
-    id: string,
-    title?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteAuthorMutationVariables = {
-  condition?: ModelAuthorConditionInput | null,
-  input: DeleteAuthorInput,
-};
-
-export type DeleteAuthorMutation = {
-  deleteAuthor?:  {
-    __typename: "Author",
-    createdAt: string,
-    id: string,
-    name?: string | null,
-    owner?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteCommentMutationVariables = {
-  condition?: ModelCommentConditionInput | null,
-  input: DeleteCommentInput,
-};
-
-export type DeleteCommentMutation = {
-  deleteComment?:  {
-    __typename: "Comment",
-    body?: string | null,
-    commentPostId?: string | null,
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    post?:  {
-      __typename: "Post",
-      body?: string | null,
+    game?:  {
+      __typename: "Game",
       createdAt: string,
       id: string,
       owner?: string | null,
-      postAuthorId?: string | null,
-      title?: string | null,
       updatedAt: string,
     } | null,
-    postCommentsId?: string | null,
+    gameQuestionsId?: string | null,
+    id: string,
+    owner?: string | null,
+    text: string,
     updatedAt: string,
   } | null,
 };
 
-export type DeletePostMutationVariables = {
-  condition?: ModelPostConditionInput | null,
-  input: DeletePostInput,
+export type DeleteTodoMutationVariables = {
+  condition?: ModelTodoConditionInput | null,
+  input: DeleteTodoInput,
 };
 
-export type DeletePostMutation = {
-  deletePost?:  {
-    __typename: "Post",
-    author?:  {
-      __typename: "Author",
-      createdAt: string,
-      id: string,
-      name?: string | null,
-      owner?: string | null,
-      updatedAt: string,
-    } | null,
-    body?: string | null,
-    comments?:  {
-      __typename: "ModelCommentConnection",
+export type DeleteTodoMutation = {
+  deleteTodo?:  {
+    __typename: "Todo",
+    content?: string | null,
+    createdAt: string,
+    id: string,
+    isDone?: boolean | null,
+    owner?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateGameMutationVariables = {
+  condition?: ModelGameConditionInput | null,
+  input: UpdateGameInput,
+};
+
+export type UpdateGameMutation = {
+  updateGame?:  {
+    __typename: "Game",
+    createdAt: string,
+    id: string,
+    owner?: string | null,
+    questions?:  {
+      __typename: "ModelQuestionConnection",
       nextToken?: string | null,
     } | null,
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    postAuthorId?: string | null,
-    title?: string | null,
     updatedAt: string,
   } | null,
 };
 
-export type DeleteTacoRecipeMutationVariables = {
-  condition?: ModelTacoRecipeConditionInput | null,
-  input: DeleteTacoRecipeInput,
+export type UpdateQuestionMutationVariables = {
+  condition?: ModelQuestionConditionInput | null,
+  input: UpdateQuestionInput,
 };
 
-export type DeleteTacoRecipeMutation = {
-  deleteTacoRecipe?:  {
-    __typename: "TacoRecipe",
+export type UpdateQuestionMutation = {
+  updateQuestion?:  {
+    __typename: "Question",
+    answers: Array< string | null >,
+    correctAnswer: string,
     createdAt: string,
-    description?: string | null,
-    id: string,
-    title?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateAuthorMutationVariables = {
-  condition?: ModelAuthorConditionInput | null,
-  input: UpdateAuthorInput,
-};
-
-export type UpdateAuthorMutation = {
-  updateAuthor?:  {
-    __typename: "Author",
-    createdAt: string,
-    id: string,
-    name?: string | null,
-    owner?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateCommentMutationVariables = {
-  condition?: ModelCommentConditionInput | null,
-  input: UpdateCommentInput,
-};
-
-export type UpdateCommentMutation = {
-  updateComment?:  {
-    __typename: "Comment",
-    body?: string | null,
-    commentPostId?: string | null,
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    post?:  {
-      __typename: "Post",
-      body?: string | null,
+    game?:  {
+      __typename: "Game",
       createdAt: string,
       id: string,
       owner?: string | null,
-      postAuthorId?: string | null,
-      title?: string | null,
       updatedAt: string,
     } | null,
-    postCommentsId?: string | null,
+    gameQuestionsId?: string | null,
+    id: string,
+    owner?: string | null,
+    text: string,
     updatedAt: string,
   } | null,
 };
 
-export type UpdatePostMutationVariables = {
-  condition?: ModelPostConditionInput | null,
-  input: UpdatePostInput,
+export type UpdateTodoMutationVariables = {
+  condition?: ModelTodoConditionInput | null,
+  input: UpdateTodoInput,
 };
 
-export type UpdatePostMutation = {
-  updatePost?:  {
-    __typename: "Post",
-    author?:  {
-      __typename: "Author",
-      createdAt: string,
-      id: string,
-      name?: string | null,
-      owner?: string | null,
-      updatedAt: string,
-    } | null,
-    body?: string | null,
-    comments?:  {
-      __typename: "ModelCommentConnection",
+export type UpdateTodoMutation = {
+  updateTodo?:  {
+    __typename: "Todo",
+    content?: string | null,
+    createdAt: string,
+    id: string,
+    isDone?: boolean | null,
+    owner?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateGameSubscriptionVariables = {
+  filter?: ModelSubscriptionGameFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateGameSubscription = {
+  onCreateGame?:  {
+    __typename: "Game",
+    createdAt: string,
+    id: string,
+    owner?: string | null,
+    questions?:  {
+      __typename: "ModelQuestionConnection",
       nextToken?: string | null,
     } | null,
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    postAuthorId?: string | null,
-    title?: string | null,
     updatedAt: string,
   } | null,
 };
 
-export type UpdateTacoRecipeMutationVariables = {
-  condition?: ModelTacoRecipeConditionInput | null,
-  input: UpdateTacoRecipeInput,
-};
-
-export type UpdateTacoRecipeMutation = {
-  updateTacoRecipe?:  {
-    __typename: "TacoRecipe",
-    createdAt: string,
-    description?: string | null,
-    id: string,
-    title?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateAuthorSubscriptionVariables = {
-  filter?: ModelSubscriptionAuthorFilterInput | null,
+export type OnCreateQuestionSubscriptionVariables = {
+  filter?: ModelSubscriptionQuestionFilterInput | null,
   owner?: string | null,
 };
 
-export type OnCreateAuthorSubscription = {
-  onCreateAuthor?:  {
-    __typename: "Author",
+export type OnCreateQuestionSubscription = {
+  onCreateQuestion?:  {
+    __typename: "Question",
+    answers: Array< string | null >,
+    correctAnswer: string,
     createdAt: string,
-    id: string,
-    name?: string | null,
-    owner?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateCommentSubscriptionVariables = {
-  filter?: ModelSubscriptionCommentFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnCreateCommentSubscription = {
-  onCreateComment?:  {
-    __typename: "Comment",
-    body?: string | null,
-    commentPostId?: string | null,
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    post?:  {
-      __typename: "Post",
-      body?: string | null,
+    game?:  {
+      __typename: "Game",
       createdAt: string,
       id: string,
       owner?: string | null,
-      postAuthorId?: string | null,
-      title?: string | null,
       updatedAt: string,
     } | null,
-    postCommentsId?: string | null,
+    gameQuestionsId?: string | null,
+    id: string,
+    owner?: string | null,
+    text: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnCreatePostSubscriptionVariables = {
-  filter?: ModelSubscriptionPostFilterInput | null,
+export type OnCreateTodoSubscriptionVariables = {
+  filter?: ModelSubscriptionTodoFilterInput | null,
   owner?: string | null,
 };
 
-export type OnCreatePostSubscription = {
-  onCreatePost?:  {
-    __typename: "Post",
-    author?:  {
-      __typename: "Author",
-      createdAt: string,
-      id: string,
-      name?: string | null,
-      owner?: string | null,
-      updatedAt: string,
-    } | null,
-    body?: string | null,
-    comments?:  {
-      __typename: "ModelCommentConnection",
+export type OnCreateTodoSubscription = {
+  onCreateTodo?:  {
+    __typename: "Todo",
+    content?: string | null,
+    createdAt: string,
+    id: string,
+    isDone?: boolean | null,
+    owner?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteGameSubscriptionVariables = {
+  filter?: ModelSubscriptionGameFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteGameSubscription = {
+  onDeleteGame?:  {
+    __typename: "Game",
+    createdAt: string,
+    id: string,
+    owner?: string | null,
+    questions?:  {
+      __typename: "ModelQuestionConnection",
       nextToken?: string | null,
     } | null,
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    postAuthorId?: string | null,
-    title?: string | null,
     updatedAt: string,
   } | null,
 };
 
-export type OnCreateTacoRecipeSubscriptionVariables = {
-  filter?: ModelSubscriptionTacoRecipeFilterInput | null,
-};
-
-export type OnCreateTacoRecipeSubscription = {
-  onCreateTacoRecipe?:  {
-    __typename: "TacoRecipe",
-    createdAt: string,
-    description?: string | null,
-    id: string,
-    title?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteAuthorSubscriptionVariables = {
-  filter?: ModelSubscriptionAuthorFilterInput | null,
+export type OnDeleteQuestionSubscriptionVariables = {
+  filter?: ModelSubscriptionQuestionFilterInput | null,
   owner?: string | null,
 };
 
-export type OnDeleteAuthorSubscription = {
-  onDeleteAuthor?:  {
-    __typename: "Author",
+export type OnDeleteQuestionSubscription = {
+  onDeleteQuestion?:  {
+    __typename: "Question",
+    answers: Array< string | null >,
+    correctAnswer: string,
     createdAt: string,
-    id: string,
-    name?: string | null,
-    owner?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteCommentSubscriptionVariables = {
-  filter?: ModelSubscriptionCommentFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnDeleteCommentSubscription = {
-  onDeleteComment?:  {
-    __typename: "Comment",
-    body?: string | null,
-    commentPostId?: string | null,
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    post?:  {
-      __typename: "Post",
-      body?: string | null,
+    game?:  {
+      __typename: "Game",
       createdAt: string,
       id: string,
       owner?: string | null,
-      postAuthorId?: string | null,
-      title?: string | null,
       updatedAt: string,
     } | null,
-    postCommentsId?: string | null,
+    gameQuestionsId?: string | null,
+    id: string,
+    owner?: string | null,
+    text: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnDeletePostSubscriptionVariables = {
-  filter?: ModelSubscriptionPostFilterInput | null,
+export type OnDeleteTodoSubscriptionVariables = {
+  filter?: ModelSubscriptionTodoFilterInput | null,
   owner?: string | null,
 };
 
-export type OnDeletePostSubscription = {
-  onDeletePost?:  {
-    __typename: "Post",
-    author?:  {
-      __typename: "Author",
-      createdAt: string,
-      id: string,
-      name?: string | null,
-      owner?: string | null,
-      updatedAt: string,
-    } | null,
-    body?: string | null,
-    comments?:  {
-      __typename: "ModelCommentConnection",
+export type OnDeleteTodoSubscription = {
+  onDeleteTodo?:  {
+    __typename: "Todo",
+    content?: string | null,
+    createdAt: string,
+    id: string,
+    isDone?: boolean | null,
+    owner?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateGameSubscriptionVariables = {
+  filter?: ModelSubscriptionGameFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateGameSubscription = {
+  onUpdateGame?:  {
+    __typename: "Game",
+    createdAt: string,
+    id: string,
+    owner?: string | null,
+    questions?:  {
+      __typename: "ModelQuestionConnection",
       nextToken?: string | null,
     } | null,
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    postAuthorId?: string | null,
-    title?: string | null,
     updatedAt: string,
   } | null,
 };
 
-export type OnDeleteTacoRecipeSubscriptionVariables = {
-  filter?: ModelSubscriptionTacoRecipeFilterInput | null,
-};
-
-export type OnDeleteTacoRecipeSubscription = {
-  onDeleteTacoRecipe?:  {
-    __typename: "TacoRecipe",
-    createdAt: string,
-    description?: string | null,
-    id: string,
-    title?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateAuthorSubscriptionVariables = {
-  filter?: ModelSubscriptionAuthorFilterInput | null,
+export type OnUpdateQuestionSubscriptionVariables = {
+  filter?: ModelSubscriptionQuestionFilterInput | null,
   owner?: string | null,
 };
 
-export type OnUpdateAuthorSubscription = {
-  onUpdateAuthor?:  {
-    __typename: "Author",
+export type OnUpdateQuestionSubscription = {
+  onUpdateQuestion?:  {
+    __typename: "Question",
+    answers: Array< string | null >,
+    correctAnswer: string,
     createdAt: string,
-    id: string,
-    name?: string | null,
-    owner?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateCommentSubscriptionVariables = {
-  filter?: ModelSubscriptionCommentFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnUpdateCommentSubscription = {
-  onUpdateComment?:  {
-    __typename: "Comment",
-    body?: string | null,
-    commentPostId?: string | null,
-    createdAt: string,
-    id: string,
-    owner?: string | null,
-    post?:  {
-      __typename: "Post",
-      body?: string | null,
+    game?:  {
+      __typename: "Game",
       createdAt: string,
       id: string,
       owner?: string | null,
-      postAuthorId?: string | null,
-      title?: string | null,
       updatedAt: string,
     } | null,
-    postCommentsId?: string | null,
+    gameQuestionsId?: string | null,
+    id: string,
+    owner?: string | null,
+    text: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnUpdatePostSubscriptionVariables = {
-  filter?: ModelSubscriptionPostFilterInput | null,
+export type OnUpdateTodoSubscriptionVariables = {
+  filter?: ModelSubscriptionTodoFilterInput | null,
   owner?: string | null,
 };
 
-export type OnUpdatePostSubscription = {
-  onUpdatePost?:  {
-    __typename: "Post",
-    author?:  {
-      __typename: "Author",
-      createdAt: string,
-      id: string,
-      name?: string | null,
-      owner?: string | null,
-      updatedAt: string,
-    } | null,
-    body?: string | null,
-    comments?:  {
-      __typename: "ModelCommentConnection",
-      nextToken?: string | null,
-    } | null,
+export type OnUpdateTodoSubscription = {
+  onUpdateTodo?:  {
+    __typename: "Todo",
+    content?: string | null,
     createdAt: string,
     id: string,
+    isDone?: boolean | null,
     owner?: string | null,
-    postAuthorId?: string | null,
-    title?: string | null,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateTacoRecipeSubscriptionVariables = {
-  filter?: ModelSubscriptionTacoRecipeFilterInput | null,
-};
-
-export type OnUpdateTacoRecipeSubscription = {
-  onUpdateTacoRecipe?:  {
-    __typename: "TacoRecipe",
-    createdAt: string,
-    description?: string | null,
-    id: string,
-    title?: string | null,
     updatedAt: string,
   } | null,
 };

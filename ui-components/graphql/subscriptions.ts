@@ -2,214 +2,178 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateAuthor = /* GraphQL */ `
-  subscription OnCreateAuthor(
-    $filter: ModelSubscriptionAuthorFilterInput
+export const onCreateGame = /* GraphQL */ `
+  subscription OnCreateGame(
+    $filter: ModelSubscriptionGameFilterInput
     $owner: String
   ) {
-    onCreateAuthor(filter: $filter, owner: $owner) {
-      createdAt
-      id
-      name
-      owner
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onCreateComment = /* GraphQL */ `
-  subscription OnCreateComment(
-    $filter: ModelSubscriptionCommentFilterInput
-    $owner: String
-  ) {
-    onCreateComment(filter: $filter, owner: $owner) {
-      body
-      commentPostId
+    onCreateGame(filter: $filter, owner: $owner) {
       createdAt
       id
       owner
-      post {
-        body
-        createdAt
-        id
-        owner
-        postAuthorId
-        title
-        updatedAt
-        __typename
-      }
-      postCommentsId
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onCreatePost = /* GraphQL */ `
-  subscription OnCreatePost(
-    $filter: ModelSubscriptionPostFilterInput
-    $owner: String
-  ) {
-    onCreatePost(filter: $filter, owner: $owner) {
-      author {
-        createdAt
-        id
-        name
-        owner
-        updatedAt
-        __typename
-      }
-      body
-      comments {
+      questions {
         nextToken
         __typename
       }
-      createdAt
-      id
-      owner
-      postAuthorId
-      title
       updatedAt
       __typename
     }
   }
 `;
-export const onDeleteAuthor = /* GraphQL */ `
-  subscription OnDeleteAuthor(
-    $filter: ModelSubscriptionAuthorFilterInput
+export const onCreateQuestion = /* GraphQL */ `
+  subscription OnCreateQuestion(
+    $filter: ModelSubscriptionQuestionFilterInput
     $owner: String
   ) {
-    onDeleteAuthor(filter: $filter, owner: $owner) {
+    onCreateQuestion(filter: $filter, owner: $owner) {
+      answers
+      correctAnswer
       createdAt
-      id
-      name
-      owner
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onDeleteComment = /* GraphQL */ `
-  subscription OnDeleteComment(
-    $filter: ModelSubscriptionCommentFilterInput
-    $owner: String
-  ) {
-    onDeleteComment(filter: $filter, owner: $owner) {
-      body
-      commentPostId
-      createdAt
-      id
-      owner
-      post {
-        body
+      game {
         createdAt
         id
-        owner
-        postAuthorId
-        title
-        updatedAt
-        __typename
-      }
-      postCommentsId
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onDeletePost = /* GraphQL */ `
-  subscription OnDeletePost(
-    $filter: ModelSubscriptionPostFilterInput
-    $owner: String
-  ) {
-    onDeletePost(filter: $filter, owner: $owner) {
-      author {
-        createdAt
-        id
-        name
         owner
         updatedAt
         __typename
       }
-      body
-      comments {
+      gameQuestionsId
+      id
+      owner
+      text
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onCreateTodo = /* GraphQL */ `
+  subscription OnCreateTodo(
+    $filter: ModelSubscriptionTodoFilterInput
+    $owner: String
+  ) {
+    onCreateTodo(filter: $filter, owner: $owner) {
+      content
+      createdAt
+      id
+      isDone
+      owner
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onDeleteGame = /* GraphQL */ `
+  subscription OnDeleteGame(
+    $filter: ModelSubscriptionGameFilterInput
+    $owner: String
+  ) {
+    onDeleteGame(filter: $filter, owner: $owner) {
+      createdAt
+      id
+      owner
+      questions {
         nextToken
         __typename
       }
-      createdAt
-      id
-      owner
-      postAuthorId
-      title
       updatedAt
       __typename
     }
   }
 `;
-export const onUpdateAuthor = /* GraphQL */ `
-  subscription OnUpdateAuthor(
-    $filter: ModelSubscriptionAuthorFilterInput
+export const onDeleteQuestion = /* GraphQL */ `
+  subscription OnDeleteQuestion(
+    $filter: ModelSubscriptionQuestionFilterInput
     $owner: String
   ) {
-    onUpdateAuthor(filter: $filter, owner: $owner) {
+    onDeleteQuestion(filter: $filter, owner: $owner) {
+      answers
+      correctAnswer
       createdAt
-      id
-      name
-      owner
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onUpdateComment = /* GraphQL */ `
-  subscription OnUpdateComment(
-    $filter: ModelSubscriptionCommentFilterInput
-    $owner: String
-  ) {
-    onUpdateComment(filter: $filter, owner: $owner) {
-      body
-      commentPostId
-      createdAt
-      id
-      owner
-      post {
-        body
+      game {
         createdAt
         id
-        owner
-        postAuthorId
-        title
-        updatedAt
-        __typename
-      }
-      postCommentsId
-      updatedAt
-      __typename
-    }
-  }
-`;
-export const onUpdatePost = /* GraphQL */ `
-  subscription OnUpdatePost(
-    $filter: ModelSubscriptionPostFilterInput
-    $owner: String
-  ) {
-    onUpdatePost(filter: $filter, owner: $owner) {
-      author {
-        createdAt
-        id
-        name
         owner
         updatedAt
         __typename
       }
-      body
-      comments {
+      gameQuestionsId
+      id
+      owner
+      text
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onDeleteTodo = /* GraphQL */ `
+  subscription OnDeleteTodo(
+    $filter: ModelSubscriptionTodoFilterInput
+    $owner: String
+  ) {
+    onDeleteTodo(filter: $filter, owner: $owner) {
+      content
+      createdAt
+      id
+      isDone
+      owner
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateGame = /* GraphQL */ `
+  subscription OnUpdateGame(
+    $filter: ModelSubscriptionGameFilterInput
+    $owner: String
+  ) {
+    onUpdateGame(filter: $filter, owner: $owner) {
+      createdAt
+      id
+      owner
+      questions {
         nextToken
         __typename
       }
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateQuestion = /* GraphQL */ `
+  subscription OnUpdateQuestion(
+    $filter: ModelSubscriptionQuestionFilterInput
+    $owner: String
+  ) {
+    onUpdateQuestion(filter: $filter, owner: $owner) {
+      answers
+      correctAnswer
       createdAt
+      game {
+        createdAt
+        id
+        owner
+        updatedAt
+        __typename
+      }
+      gameQuestionsId
       id
       owner
-      postAuthorId
-      title
+      text
+      updatedAt
+      __typename
+    }
+  }
+`;
+export const onUpdateTodo = /* GraphQL */ `
+  subscription OnUpdateTodo(
+    $filter: ModelSubscriptionTodoFilterInput
+    $owner: String
+  ) {
+    onUpdateTodo(filter: $filter, owner: $owner) {
+      content
+      createdAt
+      id
+      isDone
+      owner
       updatedAt
       __typename
     }

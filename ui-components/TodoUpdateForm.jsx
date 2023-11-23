@@ -1,14 +1,22 @@
 /* eslint-disable */
 "use client";
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  SwitchField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { generateClient } from "aws-amplify/api";
-import { createPost } from "./graphql/mutations";
+import { getTodo } from "./graphql/queries";
+import { updateTodo } from "./graphql/mutations";
 const client = generateClient();
-export default function PostCreateForm(props) {
+export default function TodoUpdateForm(props) {
   const {
-    clearOnSuccess = true,
+    id: idProp,
+    todo: todoModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -18,29 +26,48 @@ export default function PostCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    title: "",
-    body: "",
+    content: "",
+    isDone: false,
     owner: "",
     createdAt: "",
     updatedAt: "",
   };
-  const [title, setTitle] = React.useState(initialValues.title);
-  const [body, setBody] = React.useState(initialValues.body);
+  const [content, setContent] = React.useState(initialValues.content);
+  const [isDone, setIsDone] = React.useState(initialValues.isDone);
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [createdAt, setCreatedAt] = React.useState(initialValues.createdAt);
   const [updatedAt, setUpdatedAt] = React.useState(initialValues.updatedAt);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setTitle(initialValues.title);
-    setBody(initialValues.body);
-    setOwner(initialValues.owner);
-    setCreatedAt(initialValues.createdAt);
-    setUpdatedAt(initialValues.updatedAt);
+    const cleanValues = todoRecord
+      ? { ...initialValues, ...todoRecord }
+      : initialValues;
+    setContent(cleanValues.content);
+    setIsDone(cleanValues.isDone);
+    setOwner(cleanValues.owner);
+    setCreatedAt(cleanValues.createdAt);
+    setUpdatedAt(cleanValues.updatedAt);
     setErrors({});
   };
+  const [todoRecord, setTodoRecord] = React.useState(todoModelProp);
+  React.useEffect(() => {
+    const queryData = async () => {
+      const record = idProp
+        ? (
+            await client.graphql({
+              query: getTodo.replaceAll("__typename", ""),
+              variables: { id: idProp },
+            })
+          )?.data?.getTodo
+        : todoModelProp;
+      setTodoRecord(record);
+    };
+    queryData();
+  }, [idProp, todoModelProp]);
+  React.useEffect(resetStateValues, [todoRecord]);
   const validations = {
-    title: [],
-    body: [],
+    content: [],
+    isDone: [],
     owner: [],
     createdAt: [{ type: "Required" }],
     updatedAt: [{ type: "Required" }],
@@ -88,9 +115,9 @@ export default function PostCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          title,
-          body,
-          owner,
+          content: content ?? null,
+          isDone: isDone ?? null,
+          owner: owner ?? null,
           createdAt,
           updatedAt,
         };
@@ -123,18 +150,16 @@ export default function PostCreateForm(props) {
             }
           });
           await client.graphql({
-            query: createPost.replaceAll("__typename", ""),
+            query: updateTodo.replaceAll("__typename", ""),
             variables: {
               input: {
+                id: todoRecord.id,
                 ...modelFields,
               },
             },
           });
           if (onSuccess) {
             onSuccess(modelFields);
-          }
-          if (clearOnSuccess) {
-            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -143,65 +168,65 @@ export default function PostCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "PostCreateForm")}
+      {...getOverrideProps(overrides, "TodoUpdateForm")}
       {...rest}
     >
       <TextField
-        label="Title"
+        label="Content"
         isRequired={false}
         isReadOnly={false}
-        value={title}
+        value={content}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title: value,
-              body,
+              content: value,
+              isDone,
               owner,
               createdAt,
               updatedAt,
             };
             const result = onChange(modelFields);
-            value = result?.title ?? value;
+            value = result?.content ?? value;
           }
-          if (errors.title?.hasError) {
-            runValidationTasks("title", value);
+          if (errors.content?.hasError) {
+            runValidationTasks("content", value);
           }
-          setTitle(value);
+          setContent(value);
         }}
-        onBlur={() => runValidationTasks("title", title)}
-        errorMessage={errors.title?.errorMessage}
-        hasError={errors.title?.hasError}
-        {...getOverrideProps(overrides, "title")}
+        onBlur={() => runValidationTasks("content", content)}
+        errorMessage={errors.content?.errorMessage}
+        hasError={errors.content?.hasError}
+        {...getOverrideProps(overrides, "content")}
       ></TextField>
-      <TextField
-        label="Body"
-        isRequired={false}
-        isReadOnly={false}
-        value={body}
+      <SwitchField
+        label="Is done"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={isDone}
         onChange={(e) => {
-          let { value } = e.target;
+          let value = e.target.checked;
           if (onChange) {
             const modelFields = {
-              title,
-              body: value,
+              content,
+              isDone: value,
               owner,
               createdAt,
               updatedAt,
             };
             const result = onChange(modelFields);
-            value = result?.body ?? value;
+            value = result?.isDone ?? value;
           }
-          if (errors.body?.hasError) {
-            runValidationTasks("body", value);
+          if (errors.isDone?.hasError) {
+            runValidationTasks("isDone", value);
           }
-          setBody(value);
+          setIsDone(value);
         }}
-        onBlur={() => runValidationTasks("body", body)}
-        errorMessage={errors.body?.errorMessage}
-        hasError={errors.body?.hasError}
-        {...getOverrideProps(overrides, "body")}
-      ></TextField>
+        onBlur={() => runValidationTasks("isDone", isDone)}
+        errorMessage={errors.isDone?.errorMessage}
+        hasError={errors.isDone?.hasError}
+        {...getOverrideProps(overrides, "isDone")}
+      ></SwitchField>
       <TextField
         label="Owner"
         isRequired={false}
@@ -211,8 +236,8 @@ export default function PostCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              title,
-              body,
+              content,
+              isDone,
               owner: value,
               createdAt,
               updatedAt,
@@ -241,8 +266,8 @@ export default function PostCreateForm(props) {
             e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
-              title,
-              body,
+              content,
+              isDone,
               owner,
               createdAt: value,
               updatedAt,
@@ -271,8 +296,8 @@ export default function PostCreateForm(props) {
             e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
-              title,
-              body,
+              content,
+              isDone,
               owner,
               createdAt,
               updatedAt: value,
@@ -295,13 +320,14 @@ export default function PostCreateForm(props) {
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Clear"
+          children="Reset"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          {...getOverrideProps(overrides, "ClearButton")}
+          isDisabled={!(idProp || todoModelProp)}
+          {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -311,7 +337,10 @@ export default function PostCreateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={Object.values(errors).some((e) => e?.hasError)}
+            isDisabled={
+              !(idProp || todoModelProp) ||
+              Object.values(errors).some((e) => e?.hasError)
+            }
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>
