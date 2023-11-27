@@ -3,9 +3,7 @@ export function request(ctx) {
 
   const prompt = `I have these tasks to do: ${todos.join(
     ','
-  )}. What should I do next? Respond with only the content of the next task I should do and your suggestion should not already be in the list.`;
-
-  // const prompt = `Tell me a joke`;
+  )}. What are 10 things I could do next? Respond with tasks 1-10 and your suggestions should not already be in the list.`;
 
   return {
     resourcePath: `/model/anthropic.claude-v2/invoke`,
@@ -18,8 +16,8 @@ export function request(ctx) {
         prompt: `\n\nHuman:${prompt}\n\nAssistant:`,
         max_tokens_to_sample: 300,
         temperature: 0.2,
-        top_k: 250,
-        top_p: 1,
+        // top_k: 250,
+        // top_p: 1,
         stop_sequences: ['\\n\\nHuman:'],
       },
     },

@@ -4,16 +4,14 @@ import {
   Authenticator,
   Button,
   Card,
-  CheckboxField,
   Flex,
-  Placeholder,
   ScrollView,
   TextField,
   View,
 } from '@aws-amplify/ui-react';
 import awsExports from '../../amplifyconfiguration.json';
 
-import useClient from '@/hooks/useClient';
+import { client } from '@/client';
 import * as queries from '../../graphql/queries';
 import { Todo } from '../../graphql/API';
 import { LuDelete, LuSparkles } from 'react-icons/lu';
@@ -24,9 +22,8 @@ Amplify.configure({
 
 export default function Home() {
   const [todos, setTodos] = React.useState<Todo[]>([]);
+  const [thinking, setThinking] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
-
-  const { client } = useClient();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,6 +44,7 @@ export default function Home() {
   };
 
   const generateTodo = () => {
+    setThinking(true);
     client
       .graphql({
         query: queries.askBedrock,
@@ -55,11 +53,30 @@ export default function Home() {
         },
       })
       .then((results) => {
+        setThinking(false);
         try {
-          const todo = JSON.parse(
+          const todo: string = JSON.parse(
             results.data.askBedrock?.body ?? ''
           ).completion;
-          inputRef.current!.value = todo;
+
+          // get the lines of returned todo that start with a number
+          // and remove the number
+
+          const suggestions = todo
+            .split('\n')
+            .filter((line) => {
+              // true if line starts with a number
+              return line.match(/^\d+/);
+            })
+            .map((line) => {
+              // replace number . space
+              return line.replace(/^\d+\. /, '');
+            });
+          // pick random item from suggestions
+          const suggestion =
+            suggestions[Math.floor(Math.random() * suggestions.length)];
+
+          inputRef.current!.value = suggestion;
         } catch (error) {
           console.log(error);
         }
@@ -70,7 +87,7 @@ export default function Home() {
     client.models.Todo.list().then((results) => {
       setTodos(results.data as Todo[]);
     });
-  }, [client]);
+  }, []);
 
   return (
     <Authenticator>
@@ -97,14 +114,21 @@ export default function Home() {
               name="todo"
               labelHidden
               placeholder="what to do"
+              size="large"
               ref={inputRef}
+              outerStartComponent={
+                <Button
+                  size="large"
+                  isLoading={thinking}
+                  onClick={generateTodo}
+                >
+                  <LuSparkles />
+                </Button>
+              }
               outerEndComponent={
-                <>
-                  <Button onClick={generateTodo}>
-                    <LuSparkles />
-                  </Button>
-                  <Button type="submit">Create</Button>
-                </>
+                <Button size="large" variation="primary" type="submit">
+                  Create
+                </Button>
               }
             />
           </View>

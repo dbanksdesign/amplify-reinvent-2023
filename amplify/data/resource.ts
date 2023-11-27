@@ -1,11 +1,4 @@
-import { defineData, a, ClientSchema, Func } from '@aws-amplify/backend';
-
-// We need: game, players, questions, answers
-// answers need to come in realtime, once all answers have returned show the right answer and move on to next question
-// have a leaderboard
-// Bedrock player: can set the model, temp
-// if we do auth, then you can play in multiple games and have history
-// Game has
+import { defineData, a, ClientSchema } from '@aws-amplify/backend';
 
 const schema = a.schema({
   BedrockResponse: a.customType({
@@ -19,28 +12,6 @@ const schema = a.schema({
       isDone: a.boolean(),
     })
     .authorization([a.allow.public().to(['read']), a.allow.owner()]),
-
-  Question: a
-    .model({
-      text: a.string().required(),
-      answers: a.string().array().required(),
-      correctAnswer: a.string().required(),
-      game: a.belongsTo('Game'),
-    })
-    .authorization([
-      a.allow.public().to(['read']),
-      a.allow.private().to(['create']),
-      a.allow.owner().to(['create', 'update', 'delete', 'read']),
-    ]),
-
-  Game: a
-    .model({
-      questions: a.hasMany('Question'),
-    })
-    .authorization([
-      a.allow.public().to(['read']),
-      a.allow.owner().to(['create', 'update', 'delete', 'read']),
-    ]),
 
   askBedrock: a
     .query()
