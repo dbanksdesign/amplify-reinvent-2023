@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Flex } from '@aws-amplify/ui-react';
+import { Button, Flex, Text } from '@aws-amplify/ui-react';
 import { LuMoon, LuSun } from 'react-icons/lu';
 import { ColorModeContext } from './ColorModeContext';
 import * as Auth from 'aws-amplify/auth';
@@ -24,7 +24,9 @@ export const AppNav = () => {
       justifyContent="space-between"
       alignItems="center"
     >
-      <Flex direction="row" alignItems="center" gap="large"></Flex>
+      <Flex direction="row" alignItems="center" gap="large">
+        <Text fontWeight="black">ToDoDo</Text>
+      </Flex>
       <Flex direction="row">
         {/* Logout button  */}
         <Button size="small" onClick={logout}>

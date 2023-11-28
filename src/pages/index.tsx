@@ -61,7 +61,6 @@ export default function Home() {
 
           // get the lines of returned todo that start with a number
           // and remove the number
-
           const suggestions = todo
             .split('\n')
             .filter((line) => {
@@ -91,23 +90,8 @@ export default function Home() {
 
   return (
     <Authenticator>
-      <ScrollView paddingBlockEnd="4rem">
+      <ScrollView>
         <Flex direction="column" flex="1" padding="large">
-          {todos.map((todo) => (
-            <Card variation="outlined" key={todo.content}>
-              <Flex direction="row" alignItems="center">
-                <View flex="1">{todo.content}</View>
-                <Button
-                  variation="link"
-                  colorTheme="error"
-                  size="small"
-                  onClick={handleDelete(todo.id)}
-                >
-                  <LuDelete />
-                </Button>
-              </Flex>
-            </Card>
-          ))}
           <View as="form" onSubmit={handleSubmit}>
             <TextField
               label="todo"
@@ -126,12 +110,29 @@ export default function Home() {
                 </Button>
               }
               outerEndComponent={
-                <Button size="large" variation="primary" type="submit">
+                <Button variation="primary" type="submit">
                   Create
                 </Button>
               }
             />
           </View>
+          {todos
+            .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
+            .map((todo) => (
+              <Card variation="outlined" padding="small" key={todo.content}>
+                <Flex direction="row" alignItems="center">
+                  <View flex="1">{todo.content}</View>
+                  <Button
+                    variation="link"
+                    colorTheme="error"
+                    size="small"
+                    onClick={handleDelete(todo.id)}
+                  >
+                    <LuDelete />
+                  </Button>
+                </Flex>
+              </Card>
+            ))}
         </Flex>
       </ScrollView>
     </Authenticator>
