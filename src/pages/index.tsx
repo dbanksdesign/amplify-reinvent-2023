@@ -12,27 +12,28 @@ import {
 import awsExports from '../../amplifyconfiguration.json';
 
 import { client } from '@/client';
-import * as queries from '../../graphql/queries';
-import { Todo } from '../../graphql/API';
-import { LuDelete, LuSparkles } from 'react-icons/lu';
+import * as queries from '@/graphql/queries';
+import { LuCheckSquare, LuSparkles, LuSquare, LuTrash } from 'react-icons/lu';
+import { Schema } from '../../amplify/data/resource';
 
 Amplify.configure({
   ...awsExports,
 });
+
+type Todo = Schema['Todo'];
 
 export default function Home() {
   const [todos, setTodos] = React.useState<Todo[]>([]);
   const [thinking, setThinking] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     // create todo
     client.models.Todo.create({
-      // @ts-ignore
       content: e.target.todo.value,
     }).then((value) => {
-      setTodos([...todos, value.data as Todo]);
+      setTodos([...todos, value.data]);
       // clear the value of inputRef
       inputRef.current!.value = '';
     });
@@ -43,13 +44,17 @@ export default function Home() {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
+  const handleIsDone = (id: string) => async () => {};
+
   const generateTodo = () => {
     setThinking(true);
     client
       .graphql({
         query: queries.askBedrock,
         variables: {
-          todos: todos.map((todo) => todo.content ?? ''),
+          todos: todos
+            .filter((todo) => !todo.isDone)
+            .map((todo) => todo.content ?? ''),
         },
       })
       .then((results) => {
@@ -121,14 +126,16 @@ export default function Home() {
             .map((todo) => (
               <Card variation="outlined" padding="small" key={todo.content}>
                 <Flex direction="row" alignItems="center">
+                  <Button variation="link" onClick={handleIsDone(todo.id)}>
+                    {todo.isDone ? <LuCheckSquare /> : <LuSquare />}
+                  </Button>
                   <View flex="1">{todo.content}</View>
                   <Button
                     variation="link"
                     colorTheme="error"
-                    size="small"
                     onClick={handleDelete(todo.id)}
                   >
-                    <LuDelete />
+                    <LuTrash />
                   </Button>
                 </Flex>
               </Card>
