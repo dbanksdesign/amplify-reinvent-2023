@@ -3,8 +3,7 @@ export function request(ctx) {
 
   const prompt = `I have these tasks to do: ${todos.join(',')}.
   What are 10 things I could do next?
-  Respond with tasks 1-10 and your suggestions should not already be in the list.
-  Start each suggestion with "please"`;
+  Respond with tasks 1-10 and your suggestions should not already be in the list.`;
 
   return {
     resourcePath: `/model/anthropic.claude-v2/invoke`,

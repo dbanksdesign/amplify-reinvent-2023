@@ -126,9 +126,6 @@ export default function Home() {
             .map((todo) => (
               <Card variation="outlined" padding="small" key={todo.content}>
                 <Flex direction="row" alignItems="center">
-                  <Button variation="link" onClick={handleIsDone(todo.id)}>
-                    {todo.isDone ? <LuCheckSquare /> : <LuSquare />}
-                  </Button>
                   <View flex="1">{todo.content}</View>
                   <Button
                     variation="link"
