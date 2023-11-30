@@ -44,7 +44,17 @@ export default function Home() {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-  const handleIsDone = (id: string) => async () => {};
+  const handleIsDone = (id: string) => async () => {
+    const todo = todos.find((todo) => todo.id === id);
+    if (todo) {
+      todo.isDone = !todo.isDone;
+      await client.models.Todo.update({
+        id,
+        isDone: todo.isDone,
+      });
+      setTodos([...todos]);
+    }
+  };
 
   const generateTodo = () => {
     setThinking(true);
@@ -126,6 +136,9 @@ export default function Home() {
             .map((todo) => (
               <Card variation="outlined" padding="small" key={todo.content}>
                 <Flex direction="row" alignItems="center">
+                  <Button variation="link" onClick={handleIsDone(todo.id)}>
+                    {todo.isDone ? <LuCheckSquare /> : <LuSquare />}
+                  </Button>
                   <View flex="1">{todo.content}</View>
                   <Button
                     variation="link"
